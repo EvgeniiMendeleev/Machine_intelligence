@@ -1,0 +1,9 @@
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\bin\Debug\Lab2(Machine Int.).exe.config
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\bin\Debug\Lab2(Machine Int.).exe
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\bin\Debug\Lab2(Machine Int.).pdb
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Debug\Lab2(Machine Int.).csprojResolveAssemblyReference.cache
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Debug\Lab2_Machine_Int._.Form1.resources
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Debug\Lab2_Machine_Int._.Properties.Resources.resources
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Debug\Lab2(Machine Int.).csproj.GenerateResource.Cache
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Debug\Lab2(Machine Int.).exe
+c:\users\иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Debug\Lab2(Machine Int.).pdb
