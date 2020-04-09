@@ -1,18 +1,19 @@
-﻿Сборка начата 03.03.2020 12:34:12.
-     1>Проект "C:\Users\Иришка\Documents\Visual Studio 2013\Projects\Laba_1\Laba_1\Laba_1.vcxproj" в узле 2 (целевые объекты Build).
+﻿Сборка начата 04.03.2020 18:25:21.
+     1>Проект "C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\First laboratory work\Laba_1\Laba_1.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Laba_1.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Laba_1.cpp
          Laba_1.cpp
+     1>c:\users\иришка\documents\vs projects\machine_intelligence\first laboratory work\laba_1\laba_1.cpp(187): warning C4101: difficultRank: неиспользованная локальная переменная
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Иришка\Documents\Visual Studio 2013\Projects\Laba_1\Debug\Laba_1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Иришка\Documents\Visual Studio 2013\Projects\Laba_1\Debug\Laba_1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Иришка\Documents\Visual Studio 2013\Projects\Laba_1\Debug\Laba_1.lib" /MACHINE:X86 Debug\Composer.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\First laboratory work\Debug\Laba_1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\First laboratory work\Debug\Laba_1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\First laboratory work\Debug\Laba_1.lib" /MACHINE:X86 Debug\Composer.obj
          Debug\Composition.obj
          Debug\Instrument.obj
          Debug\Laba_1.obj
          Debug\stdafx.obj
          Debug\Student.obj
-         Laba_1.vcxproj -> C:\Users\Иришка\Documents\Visual Studio 2013\Projects\Laba_1\Debug\Laba_1.exe
-     1>Сборка проекта "C:\Users\Иришка\Documents\Visual Studio 2013\Projects\Laba_1\Laba_1\Laba_1.vcxproj" завершена (целевые объекты Build).
+         Laba_1.vcxproj -> C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\First laboratory work\Debug\Laba_1.exe
+     1>Сборка проекта "C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\First laboratory work\Laba_1\Laba_1.vcxproj" завершена (целевые объекты Build).
 
 Сборка успешно завершена.
 
-Затраченное время: 00:00:03.11
+Затраченное время: 00:00:02.25

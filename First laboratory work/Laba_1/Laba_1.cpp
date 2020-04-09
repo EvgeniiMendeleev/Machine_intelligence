@@ -20,6 +20,11 @@
 using namespace std;
 
 #pragma region Functions
+void clearConsole()
+{
+	system("cls");
+}
+
 //The function splits string to substrings.
 vector<string> split(string& text, char delim)
 {
@@ -132,12 +137,34 @@ bool mainMenu()
 					isExit = true;
 					break;
 				case '\r':
-					system("cls");
 					return isExit;
 					break;
 			}
 		}
 	}
+}
+
+vector<double> enterDifficultRank(vector<Instrument*> instruments)
+{
+	vector<double> ranks;
+
+	unsigned short countOfInstruments = instruments.size();
+	cout << "***********************************************************" << endl;
+	cout << "*     EXPERT SYSTEM FOR MUSIC STUDY v1.0 by Mr.Spooky     *" << endl;
+	cout << "***********************************************************" << endl;
+	cout << "На сколько бы Вы оценили свой уровень игры на:" << endl;
+	cout << " * ";
+
+	for (size_t i = 0; i < instruments.size(); i++)
+	{
+		if (i == (instruments.size() - 1))
+		{
+			cout << instruments[i]->get_name() << endl;
+			continue;
+		}
+		cout << instruments[i]->get_name() << ", ";
+	}
+	cout << "\nВведите последовательно уровень игры на каждом из них:" << endl;
 }
 #pragma endregion The mine own functions
 
@@ -151,12 +178,16 @@ int main()
 	
 	cout << "Loading of database..." << endl;
 	vector<string> downloadedDatas = loadingOfDatabase(fin);			//The data downloaded from the stream.
-	system("cls");
+	clearConsole();
 
 	if (mainMenu()) return 0;
+	clearConsole();
 
 	vector<Instrument*> instruments = enterInstrumentsFromUser(); 	//Entering musical instruments from the user who wants to learn how to play them.
-	system("cls");
+	clearConsole();
+
+	float difficultRank ;
+	enterDifficultRank(instruments);
 
 	system("Pause");
 	return 0;
