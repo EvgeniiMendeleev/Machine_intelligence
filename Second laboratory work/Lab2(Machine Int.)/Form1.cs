@@ -14,33 +14,95 @@ namespace Lab2_Machine_Int._
     public partial class Form1 : Form
     {
         enum TypeOfFile { rules, characteristics }
+        enum TypeOfError { another_symbol, empty_cell, nothing_errors }
         public Form1()
         {
             InitializeComponent();
         }
+        #region The functions for work with strings
+        private string getConnectedSubstrings(ref List<string> substrings)
+        {
+            string connectedString = "";
+            if (substrings.Count == 1)
+            {
+                connectedString = substrings[0];
+            }
+            else
+            {
+                for (int i = 0; i < substrings.Count - 1; i++)
+                {
+                    connectedString += substrings[i] + ' ';
+                }
+                connectedString += substrings.Last<string>();
+            }
 
+            return connectedString;
+        }
+        #endregion
+        #region The functions for show information for user
         private void showError(string text)
         {
             MessageBox.Show(text, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
         }
-
         private void showCompleteInfo(string text)
         {
             MessageBox.Show(text, "Успешно!", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
         }
+        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("\tПродукционная модель представления знаний\n\tРазработано Менделеевым Е.А. гр.7091", "О программе", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+        }
+        #endregion
+        #region The functions for check datas
+        private TypeOfError checkInputStringsFromCell(ref List<string> inputStrings)
+        {
+            if (inputStrings.Count <= 0)
+            {
+                return TypeOfError.empty_cell;
+            }
+            else if (!checkAnotherSymbols(ref inputStrings))
+            {
+                return TypeOfError.another_symbol;
+            }
 
+            return TypeOfError.nothing_errors;
+        }
+        private bool checkRule(string ifRule)
+        {
+            for (int i = 0; i < rulesDB.Items.Count; i++)
+            {
+                if (rulesDB.Items[i].Text == ifRule)
+                {
+                    showError("Правило с таким условием уже есть!");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        private bool checkAnotherSymbols(ref List<string> inputStrings)
+        {
+            foreach (string str in inputStrings)
+            {
+                foreach (char ch in str)
+                {
+                    if (!Char.IsLetter(ch))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        #endregion
+        #region The functions for open DAT files
         private void openCharacterFile(object sender, EventArgs e)
         {
             Stream myStream;
             OpenFileDialog openFile = new OpenFileDialog();
-
-            openFile.FileName = "characteristics";
-            openFile.Filter = "dat files (*.dat)|*.dat";
-            openFile.FilterIndex = 2;
-            openFile.RestoreDirectory = true;
+            standartSettingsForFile(openFile, "dat files (*.dat)|*.dat", 2, true);
 
             if (openFile.ShowDialog() != DialogResult.OK) return;
-
             if ((myStream = openFile.OpenFile()) == null)
             {
                 showError("Не удалось открыть файл!");
@@ -50,7 +112,6 @@ namespace Lab2_Machine_Int._
             using (BinaryReader binaryStream = new BinaryReader(myStream))
             {
                 TypeOfFile typeReadFile = (TypeOfFile)binaryStream.ReadInt32();
-
                 if (typeReadFile != TypeOfFile.characteristics)
                 {
                     showError("Данный файл не является файлом с признаками!");
@@ -64,19 +125,13 @@ namespace Lab2_Machine_Int._
                 }
             }
         }
-
         private void openRuleFile(object sender, EventArgs e)
         {
             Stream myStream;
             OpenFileDialog openFile = new OpenFileDialog();
-
-            openFile.FileName = "characteristics";
-            openFile.Filter = "dat files (*.dat)|*.dat";
-            openFile.FilterIndex = 2;
-            openFile.RestoreDirectory = true;
+            standartSettingsForFile(openFile, "dat files (*.dat)|*.dat", 2, true);
 
             if (openFile.ShowDialog() != DialogResult.OK) return;
-
             if ((myStream = openFile.OpenFile()) == null)
             {
                 showError("Не удалось открыть файл!");
@@ -86,7 +141,6 @@ namespace Lab2_Machine_Int._
             using (BinaryReader binaryStream = new BinaryReader(myStream))
             {
                 TypeOfFile typeReadFile = (TypeOfFile)binaryStream.ReadInt32();
-
                 if (typeReadFile != TypeOfFile.rules)
                 {
                     showError("Данный файл не является файлом с правилами!");
@@ -105,7 +159,8 @@ namespace Lab2_Machine_Int._
                 }
             }
         }
-
+        #endregion
+        #region The functions for save DAT files
         private void saveCharacter_Click(object sender, EventArgs e)
         {
             if (characteristicBox.Items.Count <= 0)
@@ -116,14 +171,9 @@ namespace Lab2_Machine_Int._
 
             Stream myStream;
             SaveFileDialog saveFile = new SaveFileDialog();
-
-            saveFile.FileName = "characteristics";
-            saveFile.Filter = "dat files (*.dat)|*.dat";
-            saveFile.FilterIndex = 2;
-            saveFile.RestoreDirectory = true;
+            standartSettingsForFile(saveFile, "dat files (*.dat)|*.dat", 2, true);
 
             if (saveFile.ShowDialog() != DialogResult.OK) return;
-
             if ((myStream = saveFile.OpenFile()) == null)
             {
                 showError("Не удалось сохранить файл!");
@@ -143,7 +193,6 @@ namespace Lab2_Machine_Int._
 
             showCompleteInfo("Файл признаков успешно сохранён!");
         }
-
         private void saveRule_Click(object sender, EventArgs e)
         {
             if (rulesDB.Items.Count <= 0)
@@ -154,14 +203,9 @@ namespace Lab2_Machine_Int._
 
             Stream myStream;
             SaveFileDialog saveFile = new SaveFileDialog();
-
-            saveFile.FileName = "rules";
-            saveFile.Filter = "dat files (*.dat)|*.dat";
-            saveFile.FilterIndex = 2;
-            saveFile.RestoreDirectory = true;
+            standartSettingsForFile(saveFile, "dat files (*.dat)|*.dat", 2, true);
 
             if (saveFile.ShowDialog() != DialogResult.OK) return;
-
             if ((myStream = saveFile.OpenFile()) == null)
             {
                 showError("Не удалось сохранить файл правил!");
@@ -182,34 +226,29 @@ namespace Lab2_Machine_Int._
 
             showCompleteInfo("Файл правил успешно сохранён!");
         }
-
-        private void rulesDB_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
-        {
-            rulesDB.ColumnWidthChanged -= rulesDB_ColumnWidthChanged;
-            rulesDB.Columns[e.ColumnIndex].Width = 213;
-            rulesDB.ColumnWidthChanged += rulesDB_ColumnWidthChanged;
-        }
-
-        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("\tПродукционная модель представления знаний\n\tРазработано Менделеевым Е.А. гр.7091", "О программе", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-        }
-
+        #endregion
+        #region The functions for work with characteristics
         private void addCharacter_Click(object sender, EventArgs e)
         {
-            string strOfCharacteristic = characterInputBox.Text;
+            List<string> splitInputStrings = new List<string>(characterInputBox.Text.Split(' '));
+            while (splitInputStrings.IndexOf("") != -1) splitInputStrings.Remove("");
+
+            switch (checkInputStringsFromCell(ref splitInputStrings))
+            {
+                case TypeOfError.empty_cell:
+                    showError("Не был введён признак!");
+                    return;
+
+                case TypeOfError.another_symbol:
+                    showError("В поле ввода признака присутствуют посторонние символы!");
+                    return;
+            }
+
+            string character = getConnectedSubstrings(ref splitInputStrings);
+
+            characteristicBox.Items.Add(character);
             characterInputBox.Clear();
-
-            if (strOfCharacteristic.Length > 0)
-            {
-                characteristicBox.Items.Add(strOfCharacteristic);
-            }
-            else
-            {
-                showError("Не был введён признак!");
-            }
         }
-
         private void deleteCharacter_Click(object sender, EventArgs e)
         {
             if (characteristicBox.SelectedItems.Count > 0)
@@ -225,30 +264,37 @@ namespace Lab2_Machine_Int._
                 showError("Не был выбран признак!");
             }
         }
-
-        private bool checkRule(string ifRule)
-        {
-            for (int i = 0; i < rulesDB.Items.Count; i++)
-            {
-                if (rulesDB.Items[i].Text == ifRule)
-                {
-                    showError("Правило с таким условием уже есть!");
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
+        #endregion
+        #region The functions for work with rules
         private void addRule_Click(object sender, EventArgs e)
         {
             if (ifInputBox.Text.Length > 0 && thenInputBox.Text.Length > 0)
             {
-                string ifRule = ifInputBox.Text;
-                string thenRule = thenInputBox.Text;
+                List<string> splitIfRule = new List<string>(ifInputBox.Text.Split(' '));
+                List<string> splitThenRule = new List<string>(thenInputBox.Text.Split(' '));
+
+                while (splitIfRule.IndexOf("") != -1) splitIfRule.Remove("");
+                while (splitThenRule.IndexOf("") != -1) splitThenRule.Remove("");
+
+                switch (checkInputStringsFromCell(ref splitIfRule))
+                {
+                    case TypeOfError.another_symbol:
+                        showError("В поле ввода ЕСЛИ присутствуют посторонние символы!");
+                        return;
+                }
+
+                switch (checkInputStringsFromCell(ref splitThenRule))
+                {
+                    case TypeOfError.another_symbol:
+                        showError("В поле ввода ТО присутствуют посторонние символы!");
+                        return;
+                }
 
                 ifInputBox.Clear();
                 thenInputBox.Clear();
+
+                string ifRule = getConnectedSubstrings(ref splitIfRule);
+                string thenRule = getConnectedSubstrings(ref splitThenRule);
 
                 if (!checkRule(ifRule)) return;
 
@@ -263,7 +309,6 @@ namespace Lab2_Machine_Int._
                 showError("Не все поля добавления правила заполнены!");
             }
         }
-
         private void deleteRule_Click(object sender, EventArgs e)
         {
             if (rulesDB.SelectedItems.Count > 0)
@@ -279,7 +324,8 @@ namespace Lab2_Machine_Int._
                 showError("Не было выбрано правило!");
             }
         }
-
+        #endregion
+        #region The main function of work application
         private void identifyVirus_Click(object sender, EventArgs e)
         {
             if (characteristicBox.Items.Count <= 0 && rulesDB.Items.Count <= 0)
@@ -314,10 +360,24 @@ namespace Lab2_Machine_Int._
             }
             Console.WriteLine("********************************************");
         }
-
+        #endregion
+        #region The another functions for settings apllication
+        private void rulesDB_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            rulesDB.ColumnWidthChanged -= rulesDB_ColumnWidthChanged;
+            rulesDB.Columns[e.ColumnIndex].Width = 213;
+            rulesDB.ColumnWidthChanged += rulesDB_ColumnWidthChanged;
+        }
         private void exitFromApplication(object sender, EventArgs e)
         {
             Application.Exit();
         }
+        private void standartSettingsForFile(FileDialog file, string fileFilter, int fileIndex, bool restoreDirectory)
+        {
+            file.Filter = fileFilter;
+            file.FilterIndex = fileIndex;
+            file.RestoreDirectory = restoreDirectory;
+        }
+        #endregion
     }
 }
