@@ -187,7 +187,7 @@
             this.rulesDB.Location = new System.Drawing.Point(193, 145);
             this.rulesDB.MultiSelect = false;
             this.rulesDB.Name = "rulesDB";
-            this.rulesDB.Size = new System.Drawing.Size(430, 208);
+            this.rulesDB.Size = new System.Drawing.Size(430, 213);
             this.rulesDB.TabIndex = 15;
             this.rulesDB.UseCompatibleStateImageBehavior = false;
             this.rulesDB.View = System.Windows.Forms.View.Details;

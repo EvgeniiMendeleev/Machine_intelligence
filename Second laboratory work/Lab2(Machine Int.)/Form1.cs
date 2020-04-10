@@ -50,7 +50,7 @@ namespace Lab2_Machine_Int._
         }
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("\tПродукционная модель представления знаний\n\tРазработано Менделеевым Е.А. гр.7091", "О программе", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBox.Show("Продукционная модель представления знаний\n       Разработано Менделеевым Е.А. гр.7091", "О программе", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
         }
         #endregion
         #region The functions for check datas
@@ -325,7 +325,7 @@ namespace Lab2_Machine_Int._
             }
         }
         #endregion
-        #region The main function of work application
+        #region The MAIN FUNCTION of work application
         private void identifyVirus_Click(object sender, EventArgs e)
         {
             if (characteristicBox.Items.Count <= 0 && rulesDB.Items.Count <= 0)
@@ -344,21 +344,21 @@ namespace Lab2_Machine_Int._
                 return;
             }
 
-            Console.WriteLine("*****************ПРИЗНАКИ*******************");
-            ListBox.ObjectCollection itemsChar = characteristicBox.Items;
-            for (int i = 0; i < itemsChar.Count; i++)
-            {
-                Console.WriteLine(itemsChar[i]);
-            }
-            Console.WriteLine("********************************************");
+            List<string> state = new List<string>(stateInputBox.Text.Split(' '));
+            while (state.IndexOf("") != -1) state.Remove("");
 
-            Console.WriteLine("*****************ПРАВИЛА********************");
-            ListView.ListViewItemCollection itemRules = rulesDB.Items;
-            for (int i = 0; i < itemRules.Count; i++)
+            switch (checkInputStringsFromCell(ref state))
             {
-                Console.WriteLine("ЕСЛИ " + itemRules[i].Text + " ТО " + itemRules[i].SubItems[1].Text);
+                case TypeOfError.empty_cell:
+                    showError("Поле ввода состояния пустое!");
+                    return;
+                case TypeOfError.another_symbol:
+                    showError("В поле ввода состояния есть посторонние символы!");
+                    return;
             }
-            Console.WriteLine("********************************************");
+
+            ListBox.ObjectCollection itemsChar = characteristicBox.Items;
+            ListView.ListViewItemCollection itemRules = rulesDB.Items;
         }
         #endregion
         #region The another functions for settings apllication
