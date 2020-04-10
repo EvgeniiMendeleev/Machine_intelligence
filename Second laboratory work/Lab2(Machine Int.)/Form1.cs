@@ -284,7 +284,26 @@ namespace Lab2_Machine_Int._
         {
             if (characteristicBox.SelectedItems.Count > 0)
             {
+                List<string> rules = new List<string>();
+                for (int i = 0; i < rulesDB.Items.Count; i++)
+                {
+                    rules.Add(rulesDB.Items[i].Text);
+                }
+
                 ListBox.SelectedObjectCollection selectedItems = characteristicBox.SelectedItems;
+                for (int i = 0; i < rules.Count; i++)
+                {
+                    foreach (string str in rules[i].Split(' '))
+                    {
+                        if (str == OR || str == AND) continue;
+                        if (selectedItems.IndexOf(str) != -1)
+                        {
+                            showError("Прежде, чем удалить признак, удалите правила,\nв которых присутствуют удаляемые признаки в части ЕСЛИ");
+                            return;
+                        }
+                    }
+                }
+
                 for (int i = 0; i < selectedItems.Count; i++)
                 {
                     characteristicBox.Items.Remove(selectedItems[i]);
