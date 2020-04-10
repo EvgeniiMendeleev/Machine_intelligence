@@ -15,6 +15,8 @@ namespace Lab2_Machine_Int._
     {
         enum TypeOfFile { rules, characteristics }
         enum TypeOfError { another_symbol, empty_cell, nothing_errors }
+        private const string OR = "или";
+        private const string AND = "и";
         public Form1()
         {
             InitializeComponent();
@@ -73,7 +75,6 @@ namespace Lab2_Machine_Int._
             {
                 if (rulesDB.Items[i].Text == ifRule)
                 {
-                    showError("Правило с таким условием уже есть!");
                     return false;
                 }
             }
@@ -94,6 +95,20 @@ namespace Lab2_Machine_Int._
             }
             return true;
         }
+        private bool isCharacter(ref List<string> ifRule)
+        {
+            foreach (string ifPart in ifRule)
+            {
+                if (ifPart == OR || ifPart == AND) continue;
+                if (characteristicBox.Items.IndexOf(ifPart) == -1)
+                {
+                    showError("Признака " + ifPart + " отсутствует в базе признаков!");
+                    return false;
+                }
+            }
+
+            return true;
+        }
         #endregion
         #region The functions for open DAT files
         private void openCharacterFile(object sender, EventArgs e)
@@ -106,6 +121,14 @@ namespace Lab2_Machine_Int._
             if ((myStream = openFile.OpenFile()) == null)
             {
                 showError("Не удалось открыть файл!");
+                return;
+            }
+
+            //Проверка на наличие количества информации в начале файла,
+            //чтобы в идентифицировать файл: файл признаков или файл правил.
+            if (myStream.Length < 4)
+            {
+                showError("Файл меньше 4 байт!");
                 return;
             }
 
@@ -135,6 +158,14 @@ namespace Lab2_Machine_Int._
             if ((myStream = openFile.OpenFile()) == null)
             {
                 showError("Не удалось открыть файл!");
+                return;
+            }
+
+            //Проверка на наличие количества информации в начале файла,
+            //чтобы в идентифицировать файл: файл признаков или файл правил.
+            if (myStream.Length < 4)
+            {
+                showError("Файл меньше 4 байт!");
                 return;
             }
 
@@ -290,13 +321,19 @@ namespace Lab2_Machine_Int._
                         return;
                 }
 
+                if (!isCharacter(ref splitIfRule)) return;
+
                 ifInputBox.Clear();
                 thenInputBox.Clear();
 
                 string ifRule = getConnectedSubstrings(ref splitIfRule);
                 string thenRule = getConnectedSubstrings(ref splitThenRule);
 
-                if (!checkRule(ifRule)) return;
+                if (!checkRule(ifRule))
+                {
+                    showError("Правило с таким условием уже есть!");
+                    return;
+                }
 
                 ListViewItem item = new ListViewItem();
                 item.Text = ifRule;
