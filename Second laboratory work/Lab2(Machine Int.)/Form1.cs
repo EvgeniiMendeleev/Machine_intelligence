@@ -25,11 +25,7 @@ namespace Lab2_Machine_Int._
         private string getConnectedSubstring(ref List<string> substrings)
         {
             string connectedString = "";
-            if (substrings.Count == 1)
-            {
-                connectedString = substrings[0];
-            }
-            else
+            if (substrings.Count > 1)
             {
                 for (int i = 0; i < substrings.Count - 1; i++)
                 {
@@ -37,6 +33,7 @@ namespace Lab2_Machine_Int._
                 }
                 connectedString += substrings.Last<string>();
             }
+            else connectedString = substrings[0];
 
             return connectedString;
         }
@@ -53,17 +50,17 @@ namespace Lab2_Machine_Int._
                     listOut.Add(connectedString);
                     listOut.Add(listIn[i]);
                     connectedString = "";
+
+                    continue;
+                }
+
+                if (connectedString == "")
+                {
+                    connectedString += listIn[i];
                 }
                 else
                 {
-                    if (connectedString == "")
-                    {
-                        connectedString += listIn[i];
-                    }
-                    else
-                    {
-                        connectedString += ' ' + listIn[i];
-                    }
+                    connectedString += ' ' + listIn[i];
                 }
             }
 
@@ -71,9 +68,9 @@ namespace Lab2_Machine_Int._
         }
         #endregion
         #region The functions for show information for user
-        private void showError(string text)
+        private void showError(string text, string nameOfError)
         {
-            MessageBox.Show(text, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            MessageBox.Show(text, nameOfError, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
         }
         private void showCompleteInfo(string text)
         {
@@ -134,7 +131,7 @@ namespace Lab2_Machine_Int._
                 if (ifPart == OR || ifPart == AND) continue;
                 if (characteristicBox.Items.IndexOf(ifPart) == -1)
                 {
-                    showError("Признак \"" + ifPart + "\" отсутствует в базе признаков!");
+                    showError("Признак \"" + ifPart + "\" отсутствует в базе признаков!", "Ошибка добавления правила");
                     return false;
                 }
             }
@@ -152,7 +149,7 @@ namespace Lab2_Machine_Int._
             if (openFile.ShowDialog() != DialogResult.OK) return;
             if ((myStream = openFile.OpenFile()) == null)
             {
-                showError("Не удалось открыть файл!");
+                showError("Не удалось открыть файл!", "Ошибка открытия файла");
                 return;
             }
 
@@ -160,7 +157,7 @@ namespace Lab2_Machine_Int._
             //чтобы в идентифицировать файл: файл признаков или файл правил.
             if (myStream.Length < 4)
             {
-                showError("Файл меньше 4 байт!");
+                showError("Файл меньше 4 байт!", "Ошибка размера файла");
                 return;
             }
 
@@ -169,7 +166,7 @@ namespace Lab2_Machine_Int._
                 TypeOfFile typeReadFile = (TypeOfFile)binaryStream.ReadInt32();
                 if (typeReadFile != TypeOfFile.characteristics)
                 {
-                    showError("Данный файл не является файлом с признаками!");
+                    showError("Данный файл не является файлом с признаками!", "Ошибка типа файла");
                     return;
                 }
 
@@ -189,7 +186,7 @@ namespace Lab2_Machine_Int._
             if (openFile.ShowDialog() != DialogResult.OK) return;
             if ((myStream = openFile.OpenFile()) == null)
             {
-                showError("Не удалось открыть файл!");
+                showError("Не удалось открыть файл!", "Ошибка открытия файла");
                 return;
             }
 
@@ -197,7 +194,7 @@ namespace Lab2_Machine_Int._
             //чтобы в идентифицировать файл: файл признаков или файл правил.
             if (myStream.Length < 4)
             {
-                showError("Файл меньше 4 байт!");
+                showError("Файл меньше 4 байт!", "Ошибка размера файла");
                 return;
             }
 
@@ -206,7 +203,7 @@ namespace Lab2_Machine_Int._
                 TypeOfFile typeReadFile = (TypeOfFile)binaryStream.ReadInt32();
                 if (typeReadFile != TypeOfFile.rules)
                 {
-                    showError("Данный файл не является файлом с правилами!");
+                    showError("Данный файл не является файлом с правилами!", "Ошибка типа файла");
                     return;
                 }
 
@@ -228,7 +225,7 @@ namespace Lab2_Machine_Int._
         {
             if (characteristicBox.Items.Count <= 0)
             {
-                showError("В блоке с признаками нету никаких данных!");
+                showError("В блоке с признаками нету никаких данных!", "Ошибка сохранения признака");
                 return;
             }
 
@@ -239,7 +236,7 @@ namespace Lab2_Machine_Int._
             if (saveFile.ShowDialog() != DialogResult.OK) return;
             if ((myStream = saveFile.OpenFile()) == null)
             {
-                showError("Не удалось сохранить файл!");
+                showError("Не удалось сохранить файл!", "Ошибка сохранения файла признаков");
                 return;
             }
 
@@ -260,7 +257,7 @@ namespace Lab2_Machine_Int._
         {
             if (rulesDB.Items.Count <= 0)
             {
-                showError("В таблице с правилами нету никаких данных!");
+                showError("В таблице с правилами нету никаких данных!", "Ошибка сохранения правил");
                 return;
             }
 
@@ -271,7 +268,7 @@ namespace Lab2_Machine_Int._
             if (saveFile.ShowDialog() != DialogResult.OK) return;
             if ((myStream = saveFile.OpenFile()) == null)
             {
-                showError("Не удалось сохранить файл правил!");
+                showError("Не удалось сохранить файл правил!", "Ошибка сохранения правил");
                 return;
             }
 
@@ -299,11 +296,11 @@ namespace Lab2_Machine_Int._
             switch (checkInputStringsFromCell(ref splitInputStrings))
             {
                 case TypeOfError.empty_cell:
-                    showError("Не был введён признак!");
+                    showError("Не был введён признак!", "Ошибка добавления признака");
                     return;
 
                 case TypeOfError.another_symbol:
-                    showError("В поле ввода признака присутствуют посторонние символы!");
+                    showError("В поле ввода признака присутствуют посторонние символы!", "Ошибка добавления признака");
                     return;
             }
 
@@ -330,7 +327,7 @@ namespace Lab2_Machine_Int._
                         if (str == OR || str == AND) continue;
                         if (selectedItems.IndexOf(str) != -1)
                         {
-                            showError("Прежде, чем удалить признак, удалите правила,\nв которых присутствуют удаляемые признаки в части ЕСЛИ");
+                            showError("Прежде, чем удалить признак, удалите правила,\nв которых присутствуют удаляемые признаки в части ЕСЛИ", "Ошибка удаления признака");
                             return;
                         }
                     }
@@ -343,7 +340,7 @@ namespace Lab2_Machine_Int._
             }
             else
             {
-                showError("Не был выбран признак!");
+                showError("Не был выбран признак!", "Ошибка удаления признака");
             }
         }
         #endregion
@@ -361,14 +358,14 @@ namespace Lab2_Machine_Int._
                 switch (checkInputStringsFromCell(ref splitIfRule))
                 {
                     case TypeOfError.another_symbol:
-                        showError("В поле ввода ЕСЛИ присутствуют посторонние символы!");
+                        showError("В поле ввода ЕСЛИ присутствуют посторонние символы!", "Ошибка добавления правила");
                         return;
                 }
 
                 switch (checkInputStringsFromCell(ref splitThenRule))
                 {
                     case TypeOfError.another_symbol:
-                        showError("В поле ввода ТО присутствуют посторонние символы!");
+                        showError("В поле ввода ТО присутствуют посторонние символы!", "Ошибка добавления правила");
                         return;
                 }
 
@@ -382,7 +379,7 @@ namespace Lab2_Machine_Int._
 
                 if (!checkRule(ifRule))
                 {
-                    showError("Правило с таким условием уже есть!");
+                    showError("Правило с таким условием уже есть!", "Ошибка добавления правила");
                     return;
                 }
 
@@ -394,7 +391,7 @@ namespace Lab2_Machine_Int._
             }
             else
             {
-                showError("Не все поля добавления правила заполнены!");
+                showError("Не все поля добавления правила заполнены!", "Ошибка добавления правила");
             }
         }
         private void deleteRule_Click(object sender, EventArgs e)
@@ -409,7 +406,7 @@ namespace Lab2_Machine_Int._
             }
             else
             {
-                showError("Не было выбрано правило!");
+                showError("Не было выбрано правило!", "Ошибка удаления правила");
             }
         }
         #endregion
@@ -418,17 +415,17 @@ namespace Lab2_Machine_Int._
         {
             if (characteristicBox.Items.Count <= 0 && rulesDB.Items.Count <= 0)
             {
-                showError("Формы с признаками и правилами пусты!");
+                showError("Формы с признаками и правилами пусты!", "Ошибка запроса");
                 return;
             }
             else if (characteristicBox.Items.Count <= 0)
             {
-                showError("Форма с признаками пуста!");
+                showError("Форма с признаками пуста!", "Ошибка запроса");
                 return;
             }
             else if (rulesDB.Items.Count <= 0)
             {
-                showError("Форма с правилами пуста!");
+                showError("Форма с правилами пуста!", "Ошибка запроса");
                 return;
             }
 
@@ -438,10 +435,10 @@ namespace Lab2_Machine_Int._
             switch (checkInputStringsFromCell(ref state))
             {
                 case TypeOfError.empty_cell:
-                    showError("Поле ввода состояния пустое!");
+                    showError("Поле ввода состояния пустое!", "Ошибка запроса");
                     return;
                 case TypeOfError.another_symbol:
-                    showError("В поле ввода состояния есть посторонние символы!");
+                    showError("В поле ввода состояния есть посторонние символы!", "Ошибка запроса");
                     return;
             }
 
