@@ -22,7 +22,7 @@ namespace Lab2_Machine_Int._
             InitializeComponent();
         }
         #region The functions for work with strings
-        private string getConnectedSubstrings(ref List<string> substrings)
+        private string getConnectedSubstring(ref List<string> substrings)
         {
             string connectedString = "";
             if (substrings.Count == 1)
@@ -39,6 +39,35 @@ namespace Lab2_Machine_Int._
             }
 
             return connectedString;
+        }
+
+        private void getSplitCharacteristics(out List<string> listOut, ref List<string> listIn)
+        {
+            listOut = new List<string>();
+
+            string connectedString = listIn[0];
+            for (int i = 1; i < listIn.Count; i++)
+            {
+                if (listIn[i] == OR || listIn[i] == AND)
+                {
+                    listOut.Add(connectedString);
+                    listOut.Add(listIn[i]);
+                    connectedString = "";
+                }
+                else
+                {
+                    if (connectedString == "")
+                    {
+                        connectedString += listIn[i];
+                    }
+                    else
+                    {
+                        connectedString += ' ' + listIn[i];
+                    }
+                }
+            }
+
+            if (connectedString != "") listOut.Add(connectedString);
         }
         #endregion
         #region The functions for show information for user
@@ -97,36 +126,15 @@ namespace Lab2_Machine_Int._
         }
         private bool isCharacter(ref List<string> ifRule)
         {
-            List<string> characteristicsFromRule = new List<string>();
-
-            string connectedString = ifRule[0];
-            for (int i = 1; i < ifRule.Count; i++)
-            {
-                if (ifRule[i] == OR || ifRule[i] == AND)
-                {
-                    characteristicsFromRule.Add(connectedString);
-                    connectedString = "";
-                }
-                else
-                {
-                    if (connectedString == "")
-                    {
-                        connectedString += ifRule[i];
-                    }
-                    else
-                    {
-                        connectedString += ' ' + ifRule[i];
-                    }
-                }
-            }
-
-            if (connectedString != "") characteristicsFromRule.Add(connectedString);
+            List<string> characteristicsFromRule;
+            getSplitCharacteristics(out characteristicsFromRule, ref ifRule);
 
             foreach (string ifPart in characteristicsFromRule)
             {
+                if (ifPart == OR || ifPart == AND) continue;
                 if (characteristicBox.Items.IndexOf(ifPart) == -1)
                 {
-                    showError("Признак " + ifPart + " отсутствует в базе признаков!");
+                    showError("Признак \"" + ifPart + "\" отсутствует в базе признаков!");
                     return false;
                 }
             }
@@ -299,7 +307,7 @@ namespace Lab2_Machine_Int._
                     return;
             }
 
-            string character = getConnectedSubstrings(ref splitInputStrings);
+            string character = getConnectedSubstring(ref splitInputStrings);
 
             characteristicBox.Items.Add(character);
             characterInputBox.Clear();
@@ -369,8 +377,8 @@ namespace Lab2_Machine_Int._
                 ifInputBox.Clear();
                 thenInputBox.Clear();
 
-                string ifRule = getConnectedSubstrings(ref splitIfRule);
-                string thenRule = getConnectedSubstrings(ref splitThenRule);
+                string ifRule = getConnectedSubstring(ref splitIfRule);
+                string thenRule = getConnectedSubstring(ref splitThenRule);
 
                 if (!checkRule(ifRule))
                 {
