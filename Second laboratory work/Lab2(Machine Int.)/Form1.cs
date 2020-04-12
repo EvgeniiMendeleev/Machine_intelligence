@@ -84,10 +84,18 @@ namespace Lab2_Machine_Int._
             for (int i = 1; i < request.Count - 1; i++)
             {
                 if (request[i] != AND) continue;
-                string ifPart = request[i - 1] + AND + request[i + 1];
+                string ifPart = request[i - 1] + " " + AND + " " + request[i + 1];
 
-                if (ifRuleList.IndexOf(ifPart) == -1)
+                int searchResult = ifRuleList.IndexOf(ifPart); 
+                if (searchResult == -1)
                 {
+                    showError("К сожалению, невозможно сделать заключение по данному запросу!", "Заключение");
+                    return;
+                }
+                else
+                {
+                    request.RemoveRange(i, 3);
+                    request.Insert(i, thenRuleList[searchResult]);
                 }
             }
         }
@@ -174,7 +182,6 @@ namespace Lab2_Machine_Int._
         {
             AboutBox programInfo = new AboutBox();
             programInfo.ShowDialog();
-            //MessageBox.Show("Продукционная модель представления знаний\n       Разработано Менделеевым Е.А. гр.7091", "О программе", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
         }
         #endregion
         #region The functions for check datas
