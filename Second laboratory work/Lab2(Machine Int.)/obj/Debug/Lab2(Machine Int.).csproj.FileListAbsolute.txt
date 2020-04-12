@@ -15,3 +15,4 @@ C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laborato
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Debug\Lab2(Machine Int.).exe
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Debug\Lab2(Machine Int.).pdb
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\bin\Debug\Lab2(Machine Int.).pdb
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Debug\Lab2(Machine Int.).csprojResolveAssemblyReference.cache

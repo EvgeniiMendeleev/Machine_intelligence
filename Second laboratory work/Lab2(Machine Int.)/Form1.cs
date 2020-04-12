@@ -97,12 +97,36 @@ namespace Lab2_Machine_Int._
         }
         private bool isCharacter(ref List<string> ifRule)
         {
-            foreach (string ifPart in ifRule)
+            List<string> characteristicsFromRule = new List<string>();
+
+            string connectedString = ifRule[0];
+            for (int i = 1; i < ifRule.Count; i++)
             {
-                if (ifPart == OR || ifPart == AND) continue;
+                if (ifRule[i] == OR || ifRule[i] == AND)
+                {
+                    characteristicsFromRule.Add(connectedString);
+                    connectedString = "";
+                }
+                else
+                {
+                    if (connectedString == "")
+                    {
+                        connectedString += ifRule[i];
+                    }
+                    else
+                    {
+                        connectedString += ' ' + ifRule[i];
+                    }
+                }
+            }
+
+            if (connectedString != "") characteristicsFromRule.Add(connectedString);
+
+            foreach (string ifPart in characteristicsFromRule)
+            {
                 if (characteristicBox.Items.IndexOf(ifPart) == -1)
                 {
-                    showError("Признака " + ifPart + " отсутствует в базе признаков!");
+                    showError("Признак " + ifPart + " отсутствует в базе признаков!");
                     return false;
                 }
             }
