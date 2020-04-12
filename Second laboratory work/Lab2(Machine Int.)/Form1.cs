@@ -21,6 +21,47 @@ namespace Lab2_Machine_Int._
         {
             InitializeComponent();
         }
+        #region The MAIN FUNCTION of work application
+        private void identifyVirus_Click(object sender, EventArgs e)
+        {
+            if (characteristicBox.Items.Count <= 0 && rulesDB.Items.Count <= 0)
+            {
+                showError("Формы с признаками и правилами пусты!", "Ошибка запроса");
+                return;
+            }
+            else if (characteristicBox.Items.Count <= 0)
+            {
+                showError("Форма с признаками пуста!", "Ошибка запроса");
+                return;
+            }
+            else if (rulesDB.Items.Count <= 0)
+            {
+                showError("Форма с правилами пуста!", "Ошибка запроса");
+                return;
+            }
+
+            List<string> state = new List<string>(stateInputBox.Text.Split(' '));
+            while (state.IndexOf("") != -1) state.Remove("");
+
+            switch (checkInputStringsFromCell(ref state))
+            {
+                case TypeOfError.empty_cell:
+                    showError("Поле ввода состояния пустое!", "Ошибка запроса");
+                    return;
+                case TypeOfError.another_symbol:
+                    showError("В поле ввода состояния есть посторонние символы!", "Ошибка запроса");
+                    return;
+            }
+
+            if (!isCharacter(ref state, "Ошибка запроса")) return;
+
+            ListBox.ObjectCollection itemsChar = characteristicBox.Items;
+            ListView.ListViewItemCollection itemRules = rulesDB.Items;
+
+
+
+        }
+        #endregion
         #region The functions for work with strings
         private string getConnectedSubstring(ref List<string> substrings)
         {
@@ -121,7 +162,7 @@ namespace Lab2_Machine_Int._
             }
             return true;
         }
-        private bool isCharacter(ref List<string> ifRule)
+        private bool isCharacter(ref List<string> ifRule, string errorName)
         {
             List<string> characteristicsFromRule;
             getSplitCharacteristics(out characteristicsFromRule, ref ifRule);
@@ -131,7 +172,7 @@ namespace Lab2_Machine_Int._
                 if (ifPart == OR || ifPart == AND) continue;
                 if (characteristicBox.Items.IndexOf(ifPart) == -1)
                 {
-                    showError("Признак \"" + ifPart + "\" отсутствует в базе признаков!", "Ошибка добавления правила");
+                    showError("Признак \"" + ifPart + "\" отсутствует в базе признаков!", errorName);
                     return false;
                 }
             }
@@ -369,7 +410,7 @@ namespace Lab2_Machine_Int._
                         return;
                 }
 
-                if (!isCharacter(ref splitIfRule)) return;
+                if (!isCharacter(ref splitIfRule, "Ошибка добавления правила")) return;
 
                 ifInputBox.Clear();
                 thenInputBox.Clear();
@@ -408,42 +449,6 @@ namespace Lab2_Machine_Int._
             {
                 showError("Не было выбрано правило!", "Ошибка удаления правила");
             }
-        }
-        #endregion
-        #region The MAIN FUNCTION of work application
-        private void identifyVirus_Click(object sender, EventArgs e)
-        {
-            if (characteristicBox.Items.Count <= 0 && rulesDB.Items.Count <= 0)
-            {
-                showError("Формы с признаками и правилами пусты!", "Ошибка запроса");
-                return;
-            }
-            else if (characteristicBox.Items.Count <= 0)
-            {
-                showError("Форма с признаками пуста!", "Ошибка запроса");
-                return;
-            }
-            else if (rulesDB.Items.Count <= 0)
-            {
-                showError("Форма с правилами пуста!", "Ошибка запроса");
-                return;
-            }
-
-            List<string> state = new List<string>(stateInputBox.Text.Split(' '));
-            while (state.IndexOf("") != -1) state.Remove("");
-
-            switch (checkInputStringsFromCell(ref state))
-            {
-                case TypeOfError.empty_cell:
-                    showError("Поле ввода состояния пустое!", "Ошибка запроса");
-                    return;
-                case TypeOfError.another_symbol:
-                    showError("В поле ввода состояния есть посторонние символы!", "Ошибка запроса");
-                    return;
-            }
-
-            ListBox.ObjectCollection itemsChar = characteristicBox.Items;
-            ListView.ListViewItemCollection itemRules = rulesDB.Items;
         }
         #endregion
         #region The another functions for settings apllication
