@@ -18,3 +18,4 @@ C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laborato
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Debug\Lab2(Machine Int.).csprojResolveAssemblyReference.cache
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Debug\Expert_System_Namespace_.ExpertSystemResult.resources
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Debug\About_Box_Namespace_.AboutBox.resources
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Debug\Non_Result_System.NoneResultSystem.resources

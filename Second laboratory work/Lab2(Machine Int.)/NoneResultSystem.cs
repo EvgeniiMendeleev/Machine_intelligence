@@ -8,19 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Expert_System_Namespace_
+namespace Non_Result_System
 {
-    public partial class ExpertSystemResult: Form
+    public partial class NoneResultSystem: Form
     {
-        public ExpertSystemResult()
+        public NoneResultSystem()
         {
             InitializeComponent();
         }
 
-        public void showWindow(string nameOfVirus, string descriptionOfVirus)
+        public void showWindow()
         {
-            resultTextBox.Text = nameOfVirus;
-            descriptionTextBox.Text = descriptionOfVirus;
             this.ShowDialog();
         }
 

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using Expert_System_Namespace_;
 using About_Box_Namespace_;
+using Non_Result_System;
 
 namespace Lab2_Machine_Int._
 {
@@ -81,23 +82,71 @@ namespace Lab2_Machine_Int._
             List<string> request;
             getSplitCharacteristics(out request, ref state);
 
-            for (int i = 1; i < request.Count - 1; i++)
+            while(request.IndexOf(AND) != -1)
             {
-                if (request[i] != AND) continue;
-                string ifPart = request[i - 1] + " " + AND + " " + request[i + 1];
+                for (int i = 1; i < request.Count - 1; i++)
+                {
+                    if (request[i] != AND) continue;
+                    string andPart = request[i - 1] + " " + AND + " " + request[i + 1];
 
-                int searchResult = ifRuleList.IndexOf(ifPart); 
-                if (searchResult == -1)
-                {
-                    showError("К сожалению, невозможно сделать заключение по данному запросу!", "Заключение");
-                    return;
-                }
-                else
-                {
-                    request.RemoveRange(i, 3);
-                    request.Insert(i, thenRuleList[searchResult]);
+                    int searchResult = ifRuleList.IndexOf(andPart);
+                    if (searchResult == -1)
+                    {
+                        NoneResultSystem windowNoneResult = new NoneResultSystem();
+                        windowNoneResult.showWindow();
+                        return;
+                    }
+                    else
+                    {
+                        request.RemoveRange(i - 1, 3);
+                        request.Insert(i - 1, thenRuleList[searchResult]);
+                        i -= 1;
+                    }
                 }
             }
+            
+            List<string> orRules = new List<string>();
+
+            for (int i = 0; i < ifRuleList.Count; i++)
+            {
+                if (ifRuleList[i].IndexOf(OR) != -1)
+                {
+                    orRules.Add(ifRuleList[i]);
+                }
+            }
+
+            for (int i = 0; i < request.Count; i++)
+            {
+                if (request[i] == OR) continue;
+
+                int searchResult = -1;
+                for (int j = 0; j < ifRuleList.Count; j++)
+                {
+                    int pos;
+                    if (!inStringOR(ifRuleList[j], request[i])) continue;
+                    searchResult = j;
+                    break;
+                }
+                
+                if (searchResult != -1)
+                {
+                    request.RemoveAt(i);
+                    request.Insert(i, thenRuleList[searchResult]);
+                    i -= 1;
+                    continue;
+                }
+                if (itemsChar.IndexOf(request[i]) == -1)
+                {
+                    ExpertSystemResult result = new ExpertSystemResult();
+                    int pos = thenRuleList.IndexOf(request[i]);
+
+                    result.showWindow(request[i], ifRuleList[pos]);
+                    return;
+                }
+            }
+
+            NoneResultSystem noneResult = new NoneResultSystem();
+            noneResult.showWindow();
         }
         #endregion
         #region The functions for enter datas to forms
@@ -167,6 +216,25 @@ namespace Lab2_Machine_Int._
             }
 
             if (connectedString != "") listOut.Add(connectedString);
+        }
+        private bool inStringOR(string str, string substring)
+        {
+            int pos = str.IndexOf(substring);
+            if (pos == -1) return false;
+
+            str = str.Remove(pos, substring.Length);
+            string[] substrings = str.Split(' ');
+
+            for (int i = 1; i < substrings.Length - 1; i++)
+            {
+                if (substrings[i] != "") continue;
+                bool opFirst = substrings[i - 1] == AND || substrings[i - 1] == OR;
+                bool opSecond = substrings[i + 1] == AND || substrings[i + 1] == OR;
+
+                if (opFirst && opSecond) return false;
+            }
+
+            return true;
         }
         #endregion
         #region The functions for show information for user
@@ -427,9 +495,6 @@ namespace Lab2_Machine_Int._
 
             characteristicBox.Items.Add(character);
             characterInputBox.Clear();
-
-            ExpertSystemResult window = new ExpertSystemResult();
-            window.showWindow("Ты думал, что это был вирус, но это я - Дио!");
         }
         private void deleteCharacter_Click(object sender, EventArgs e)
         {
