@@ -87,19 +87,31 @@ namespace Lab2_Machine_Int._
                 for (int i = 1; i < request.Count - 1; i++)
                 {
                     if (request[i] != AND) continue;
-                    string andPart = request[i - 1] + " " + AND + " " + request[i + 1];
 
+                    string andPart = request[i - 1] + " " + AND + " " + request[i + 1];
                     int searchResult = ifRuleList.IndexOf(andPart);
-                    if (searchResult == -1)
+                    bool firstSearch = searchResult == -1;
+
+                    andPart = request[i + 1] + " " + AND + " " + request[i - 1];
+                    int anotherSearch = ifRuleList.IndexOf(andPart);
+                    bool secondSearch = anotherSearch == -1;
+
+                    if (firstSearch && secondSearch)
                     {
                         NoneResultSystem windowNoneResult = new NoneResultSystem();
                         windowNoneResult.showWindow();
                         return;
                     }
-                    else
+                    else if(!firstSearch)
                     {
                         request.RemoveRange(i - 1, 3);
                         request.Insert(i - 1, thenRuleList[searchResult]);
+                        i -= 1;
+                    }
+                    else if (!secondSearch)
+                    {
+                        request.RemoveRange(i - 1, 3);
+                        request.Insert(i - 1, thenRuleList[anotherSearch]);
                         i -= 1;
                     }
                 }
