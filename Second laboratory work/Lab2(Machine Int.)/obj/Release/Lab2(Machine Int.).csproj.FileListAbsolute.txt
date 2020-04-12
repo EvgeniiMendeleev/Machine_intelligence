@@ -7,3 +7,14 @@ C:\Users\Иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\L
 C:\Users\Иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).exe
 C:\Users\Иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).pdb
 C:\Users\Иришка\documents\visual studio 2013\Projects\Lab2(Machine Int.)\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).csprojResolveAssemblyReference.cache
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\bin\Release\Lab2(Machine Int.).exe.config
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).exe
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).pdb
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\bin\Release\Lab2(Machine Int.).exe
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\bin\Release\Lab2(Machine Int.).pdb
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).csprojResolveAssemblyReference.cache
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\About_Box_Namespace_.AboutBox.resources
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Expert_System_Namespace_.ExpertSystemResult.resources
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2_Machine_Int._.Form1.resources
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2_Machine_Int._.Properties.Resources.resources
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).csproj.GenerateResource.Cache

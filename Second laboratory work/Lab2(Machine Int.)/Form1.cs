@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Expert_System_Namespace_;
+using About_Box_Namespace_;
 
 namespace Lab2_Machine_Int._
 {
@@ -170,7 +172,9 @@ namespace Lab2_Machine_Int._
         }
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Продукционная модель представления знаний\n       Разработано Менделеевым Е.А. гр.7091", "О программе", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            AboutBox programInfo = new AboutBox();
+            programInfo.ShowDialog();
+            //MessageBox.Show("Продукционная модель представления знаний\n       Разработано Менделеевым Е.А. гр.7091", "О программе", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
         }
         #endregion
         #region The functions for check datas
@@ -416,6 +420,9 @@ namespace Lab2_Machine_Int._
 
             characteristicBox.Items.Add(character);
             characterInputBox.Clear();
+
+            ExpertSystemResult window = new ExpertSystemResult();
+            window.showWindow("Ты думал, что это был вирус, но это я - Дио!");
         }
         private void deleteCharacter_Click(object sender, EventArgs e)
         {
