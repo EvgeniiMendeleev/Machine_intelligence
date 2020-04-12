@@ -14,36 +14,13 @@ namespace Lab2_Machine_Int._
     public partial class Form1 : Form
     {
         enum TypeOfFile { rules, characteristics }
-        enum TypeOfError { another_symbol, empty_cell, nothing_errors }
+        enum TypeOfError { another_symbol, empty_cell, not_pair_for_AND, not_pair_for_OR, nothing_errors }
         private const string OR = "или";
         private const string AND = "и";
         public Form1()
         {
             InitializeComponent();
         }
-        #region The functions for enter datas to forms
-        private void enterCharacteristic(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                addCharacter_Click(sender, e);
-            }
-        }
-        private void enterRule(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                addRule_Click(sender, e);
-            }
-        }
-        private void enterRequest(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                identifyVirus_Click(sender, e);
-            }
-        }
-        #endregion
         #region The MAIN FUNCTION of work application
         private void identifyVirus_Click(object sender, EventArgs e)
         {
@@ -74,12 +51,43 @@ namespace Lab2_Machine_Int._
                 case TypeOfError.another_symbol:
                     showError("В поле ввода состояния есть посторонние символы!", "Ошибка запроса");
                     return;
+                case TypeOfError.not_pair_for_AND:
+                    showError("Для оператора \"И\" нету второго операнда!", "Ошибка запроса");
+                    return;
+                case TypeOfError.not_pair_for_OR:
+                    showError("Для оператора \"ИЛИ\" нету второго операнда!", "Ошибка запроса");
+                    return;
             }
 
             if (!isCharacter(ref state, "Ошибка запроса")) return;
 
             ListBox.ObjectCollection itemsChar = characteristicBox.Items;
             ListView.ListViewItemCollection itemRules = rulesDB.Items;
+
+            //TODO: Разработать основной алгоритм программы с прямым выводом.
+        }
+        #endregion
+        #region The functions for enter datas to forms
+        private void enterCharacteristic(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addCharacter_Click(sender, e);
+            }
+        }
+        private void enterRule(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addRule_Click(sender, e);
+            }
+        }
+        private void enterRequest(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                identifyVirus_Click(sender, e);
+            }
         }
         #endregion
         #region The functions for work with strings
@@ -145,6 +153,14 @@ namespace Lab2_Machine_Int._
         #region The functions for check datas
         private TypeOfError checkInputStringsFromCell(ref List<string> inputStrings)
         {
+            for (int i = 1; i < inputStrings.Count - 1; i++)
+            {
+                bool isLogicOp = inputStrings[i + 1] == AND || inputStrings[i + 1] == OR;
+
+                if (inputStrings[i] == OR && isLogicOp) return TypeOfError.not_pair_for_OR;
+                else if (inputStrings[i] == AND && isLogicOp) return TypeOfError.not_pair_for_AND;
+            }
+
             if (inputStrings.Count <= 0)
             {
                 return TypeOfError.empty_cell;
@@ -152,6 +168,14 @@ namespace Lab2_Machine_Int._
             else if (!checkAnotherSymbols(ref inputStrings))
             {
                 return TypeOfError.another_symbol;
+            }
+            else if (inputStrings[0] == OR || inputStrings[inputStrings.Count - 1] == OR)
+            {
+                return TypeOfError.not_pair_for_OR;
+            }
+            else if (inputStrings[0] == AND || inputStrings[inputStrings.Count - 1] == AND)
+            {
+                return TypeOfError.not_pair_for_AND;
             }
 
             return TypeOfError.nothing_errors;
@@ -420,6 +444,12 @@ namespace Lab2_Machine_Int._
                 {
                     case TypeOfError.another_symbol:
                         showError("В поле ввода ЕСЛИ присутствуют посторонние символы!", "Ошибка добавления правила");
+                        return;
+                    case TypeOfError.not_pair_for_AND:
+                        showError("Для оператора \"И\" нету второго операнда!", "Ошибка добавления правила");
+                        return;
+                    case TypeOfError.not_pair_for_OR:
+                        showError("Для оператора \"ИЛИ\" нету второго операнда!", "Ошибка добавления правила");
                         return;
                 }
 

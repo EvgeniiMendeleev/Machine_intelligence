@@ -286,6 +286,7 @@
             this.stateInputBox.Name = "stateInputBox";
             this.stateInputBox.Size = new System.Drawing.Size(499, 20);
             this.stateInputBox.TabIndex = 24;
+            this.stateInputBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.enterRequest);
             // 
             // identifyVirus
             // 
