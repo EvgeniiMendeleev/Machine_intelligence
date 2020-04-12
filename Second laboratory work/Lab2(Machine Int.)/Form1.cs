@@ -104,16 +104,6 @@ namespace Lab2_Machine_Int._
                     }
                 }
             }
-            
-            List<string> orRules = new List<string>();
-
-            for (int i = 0; i < ifRuleList.Count; i++)
-            {
-                if (ifRuleList[i].IndexOf(OR) != -1)
-                {
-                    orRules.Add(ifRuleList[i]);
-                }
-            }
 
             for (int i = 0; i < request.Count; i++)
             {
@@ -225,13 +215,36 @@ namespace Lab2_Machine_Int._
             str = str.Remove(pos, substring.Length);
             string[] substrings = str.Split(' ');
 
-            for (int i = 1; i < substrings.Length - 1; i++)
+            for (int i = 0; i < substrings.Length; i++)
             {
                 if (substrings[i] != "") continue;
-                bool opFirst = substrings[i - 1] == AND || substrings[i - 1] == OR;
-                bool opSecond = substrings[i + 1] == AND || substrings[i + 1] == OR;
+                if (i == 0)
+                {
+                    if (substrings[i + 1] == AND) return false;
+                    else if (substrings[i + 1] == OR) return true;
+                }
+                else if (i == substrings.Length - 1)
+                {
+                    if (substrings[i - 1] == AND) return false;
+                    else if (substrings[i - 1] == OR) return true;
+                }
+                else
+                {
+                    bool opFirst = substrings[i - 1] == AND;
+                    bool opSecond = substrings[i + 1] == AND;
 
-                if (opFirst && opSecond) return false;
+                    if (opFirst && opSecond) return false;
+
+                    opFirst = substrings[i - 1] == OR;
+                    opSecond = substrings[i + 1] == AND;
+
+                    if (opFirst && opSecond) return false;
+
+                    opFirst = substrings[i - 1] == AND;
+                    opSecond = substrings[i + 1] == OR;
+
+                    if (opFirst && opSecond) return false;
+                }
             }
 
             return true;
