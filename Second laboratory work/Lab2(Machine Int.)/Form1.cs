@@ -61,10 +61,33 @@ namespace Lab2_Machine_Int._
 
             if (!isCharacter(ref state, "Ошибка запроса")) return;
 
-            ListBox.ObjectCollection itemsChar = characteristicBox.Items;
-            ListView.ListViewItemCollection itemRules = rulesDB.Items;
+            List<string> itemsChar = new List<string>();
+            List<string> ifRuleList = new List<string>();
+            List<string> thenRuleList = new List<string>();
+
+            for (int i = 0; i < characteristicBox.Items.Count; i++) itemsChar.Add((string)characteristicBox.Items[i]);
+            for (int i = 0; i < rulesDB.Items.Count; i++)
+            {
+                ifRuleList.Add((string)rulesDB.Items[i].SubItems[0].Text);
+                thenRuleList.Add((string)rulesDB.Items[i].SubItems[1].Text);
+            }
+
+            int COUNT_OF_RULE = rulesDB.Items.Count;
 
             //TODO: Разработать основной алгоритм программы с прямым выводом.
+            
+            List<string> request;
+            getSplitCharacteristics(out request, ref state);
+
+            for (int i = 1; i < request.Count - 1; i++)
+            {
+                if (request[i] != AND) continue;
+                string ifPart = request[i - 1] + AND + request[i + 1];
+
+                if (ifRuleList.IndexOf(ifPart) == -1)
+                {
+                }
+            }
         }
         #endregion
         #region The functions for enter datas to forms
