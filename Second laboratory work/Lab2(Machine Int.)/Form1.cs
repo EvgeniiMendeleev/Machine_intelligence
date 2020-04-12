@@ -21,6 +21,29 @@ namespace Lab2_Machine_Int._
         {
             InitializeComponent();
         }
+        #region The functions for enter datas to forms
+        private void enterCharacteristic(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addCharacter_Click(sender, e);
+            }
+        }
+        private void enterRule(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addRule_Click(sender, e);
+            }
+        }
+        private void enterRequest(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                identifyVirus_Click(sender, e);
+            }
+        }
+        #endregion
         #region The MAIN FUNCTION of work application
         private void identifyVirus_Click(object sender, EventArgs e)
         {
@@ -57,9 +80,6 @@ namespace Lab2_Machine_Int._
 
             ListBox.ObjectCollection itemsChar = characteristicBox.Items;
             ListView.ListViewItemCollection itemRules = rulesDB.Items;
-
-
-
         }
         #endregion
         #region The functions for work with strings

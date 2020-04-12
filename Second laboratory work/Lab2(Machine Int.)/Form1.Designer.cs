@@ -124,8 +124,8 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(457, 50);
             this.label4.TabIndex = 8;
-            this.label4.Text = "Продукционная модель представления знаний.\r\n                      Экспертная сист" +
-    "ема.";
+            this.label4.Text = "Продукционная модель представления знаний.\r\n  Экспертная система по определению в" +
+    "ируса.";
             // 
             // addCharacter
             // 
@@ -143,6 +143,7 @@
             this.characterInputBox.Name = "characterInputBox";
             this.characterInputBox.Size = new System.Drawing.Size(161, 20);
             this.characterInputBox.TabIndex = 11;
+            this.characterInputBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.enterCharacteristic);
             // 
             // deleteCharacter
             // 
@@ -168,11 +169,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(54, 125);
+            this.label1.Location = new System.Drawing.Point(28, 125);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 17);
+            this.label1.Size = new System.Drawing.Size(128, 17);
             this.label1.TabIndex = 14;
-            this.label1.Text = "Признаки";
+            this.label1.Text = "Признаки вирусов";
             // 
             // rulesDB
             // 
@@ -209,6 +210,7 @@
             this.ifInputBox.Name = "ifInputBox";
             this.ifInputBox.Size = new System.Drawing.Size(171, 20);
             this.ifInputBox.TabIndex = 16;
+            this.ifInputBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.enterRule);
             // 
             // label2
             // 
@@ -226,6 +228,7 @@
             this.thenInputBox.Name = "thenInputBox";
             this.thenInputBox.Size = new System.Drawing.Size(171, 20);
             this.thenInputBox.TabIndex = 18;
+            this.thenInputBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.enterRule);
             // 
             // label3
             // 
@@ -297,6 +300,7 @@
             // characteristicBox
             // 
             this.characteristicBox.FormattingEnabled = true;
+            this.characteristicBox.HorizontalScrollbar = true;
             this.characteristicBox.Location = new System.Drawing.Point(12, 146);
             this.characteristicBox.Name = "characteristicBox";
             this.characteristicBox.Size = new System.Drawing.Size(161, 212);
