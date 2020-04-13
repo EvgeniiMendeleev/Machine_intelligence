@@ -66,7 +66,7 @@
             this.оПрограммеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(635, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(746, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -120,7 +120,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(88, 24);
+            this.label4.Location = new System.Drawing.Point(134, 24);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(457, 50);
             this.label4.TabIndex = 8;
@@ -131,7 +131,7 @@
             // 
             this.addCharacter.Location = new System.Drawing.Point(12, 389);
             this.addCharacter.Name = "addCharacter";
-            this.addCharacter.Size = new System.Drawing.Size(75, 23);
+            this.addCharacter.Size = new System.Drawing.Size(131, 23);
             this.addCharacter.TabIndex = 10;
             this.addCharacter.Text = "Добавить";
             this.addCharacter.UseVisualStyleBackColor = true;
@@ -141,15 +141,15 @@
             // 
             this.characterInputBox.Location = new System.Drawing.Point(12, 363);
             this.characterInputBox.Name = "characterInputBox";
-            this.characterInputBox.Size = new System.Drawing.Size(161, 20);
+            this.characterInputBox.Size = new System.Drawing.Size(272, 20);
             this.characterInputBox.TabIndex = 11;
             this.characterInputBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.enterCharacteristic);
             // 
             // deleteCharacter
             // 
-            this.deleteCharacter.Location = new System.Drawing.Point(93, 389);
+            this.deleteCharacter.Location = new System.Drawing.Point(149, 389);
             this.deleteCharacter.Name = "deleteCharacter";
-            this.deleteCharacter.Size = new System.Drawing.Size(80, 23);
+            this.deleteCharacter.Size = new System.Drawing.Size(135, 23);
             this.deleteCharacter.TabIndex = 12;
             this.deleteCharacter.Text = "Удалить";
             this.deleteCharacter.UseVisualStyleBackColor = true;
@@ -159,7 +159,7 @@
             // 
             this.saveCharacter.Location = new System.Drawing.Point(12, 418);
             this.saveCharacter.Name = "saveCharacter";
-            this.saveCharacter.Size = new System.Drawing.Size(161, 23);
+            this.saveCharacter.Size = new System.Drawing.Size(272, 23);
             this.saveCharacter.TabIndex = 13;
             this.saveCharacter.Text = "Сохранить";
             this.saveCharacter.UseVisualStyleBackColor = true;
@@ -169,7 +169,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(28, 125);
+            this.label1.Location = new System.Drawing.Point(89, 126);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(128, 17);
             this.label1.TabIndex = 14;
@@ -185,14 +185,13 @@
             this.rulesDB.GridLines = true;
             this.rulesDB.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.rulesDB.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.rulesDB.Location = new System.Drawing.Point(193, 145);
+            this.rulesDB.Location = new System.Drawing.Point(304, 146);
             this.rulesDB.MultiSelect = false;
             this.rulesDB.Name = "rulesDB";
             this.rulesDB.Size = new System.Drawing.Size(430, 213);
             this.rulesDB.TabIndex = 15;
             this.rulesDB.UseCompatibleStateImageBehavior = false;
             this.rulesDB.View = System.Windows.Forms.View.Details;
-            this.rulesDB.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.rulesDB_ColumnWidthChanged);
             // 
             // ifColumn
             // 
@@ -206,7 +205,7 @@
             // 
             // ifInputBox
             // 
-            this.ifInputBox.Location = new System.Drawing.Point(240, 364);
+            this.ifInputBox.Location = new System.Drawing.Point(351, 365);
             this.ifInputBox.Name = "ifInputBox";
             this.ifInputBox.Size = new System.Drawing.Size(171, 20);
             this.ifInputBox.TabIndex = 16;
@@ -216,7 +215,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(190, 363);
+            this.label2.Location = new System.Drawing.Point(301, 364);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 17);
             this.label2.TabIndex = 17;
@@ -224,7 +223,7 @@
             // 
             // thenInputBox
             // 
-            this.thenInputBox.Location = new System.Drawing.Point(452, 363);
+            this.thenInputBox.Location = new System.Drawing.Point(563, 364);
             this.thenInputBox.Name = "thenInputBox";
             this.thenInputBox.Size = new System.Drawing.Size(171, 20);
             this.thenInputBox.TabIndex = 18;
@@ -234,7 +233,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(417, 364);
+            this.label3.Location = new System.Drawing.Point(528, 365);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 17);
             this.label3.TabIndex = 19;
@@ -242,7 +241,7 @@
             // 
             // addRule
             // 
-            this.addRule.Location = new System.Drawing.Point(193, 390);
+            this.addRule.Location = new System.Drawing.Point(304, 391);
             this.addRule.Name = "addRule";
             this.addRule.Size = new System.Drawing.Size(218, 23);
             this.addRule.TabIndex = 20;
@@ -252,7 +251,7 @@
             // 
             // deleteRule
             // 
-            this.deleteRule.Location = new System.Drawing.Point(417, 390);
+            this.deleteRule.Location = new System.Drawing.Point(528, 391);
             this.deleteRule.Name = "deleteRule";
             this.deleteRule.Size = new System.Drawing.Size(206, 23);
             this.deleteRule.TabIndex = 21;
@@ -262,7 +261,7 @@
             // 
             // saveRule
             // 
-            this.saveRule.Location = new System.Drawing.Point(193, 418);
+            this.saveRule.Location = new System.Drawing.Point(304, 419);
             this.saveRule.Name = "saveRule";
             this.saveRule.Size = new System.Drawing.Size(430, 23);
             this.saveRule.TabIndex = 22;
@@ -274,7 +273,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(372, 125);
+            this.label5.Location = new System.Drawing.Point(483, 126);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 17);
             this.label5.TabIndex = 23;
@@ -284,13 +283,13 @@
             // 
             this.stateInputBox.Location = new System.Drawing.Point(12, 93);
             this.stateInputBox.Name = "stateInputBox";
-            this.stateInputBox.Size = new System.Drawing.Size(499, 20);
+            this.stateInputBox.Size = new System.Drawing.Size(610, 20);
             this.stateInputBox.TabIndex = 24;
             this.stateInputBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.enterRequest);
             // 
             // identifyVirus
             // 
-            this.identifyVirus.Location = new System.Drawing.Point(517, 93);
+            this.identifyVirus.Location = new System.Drawing.Point(628, 90);
             this.identifyVirus.Name = "identifyVirus";
             this.identifyVirus.Size = new System.Drawing.Size(106, 23);
             this.identifyVirus.TabIndex = 25;
@@ -304,14 +303,14 @@
             this.characteristicBox.HorizontalScrollbar = true;
             this.characteristicBox.Location = new System.Drawing.Point(12, 146);
             this.characteristicBox.Name = "characteristicBox";
-            this.characteristicBox.Size = new System.Drawing.Size(161, 212);
+            this.characteristicBox.Size = new System.Drawing.Size(272, 212);
             this.characteristicBox.TabIndex = 26;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 460);
+            this.ClientSize = new System.Drawing.Size(746, 460);
             this.Controls.Add(this.characteristicBox);
             this.Controls.Add(this.identifyVirus);
             this.Controls.Add(this.stateInputBox);

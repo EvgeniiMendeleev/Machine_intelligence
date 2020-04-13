@@ -64,20 +64,14 @@ namespace Lab2_Machine_Int._
 
             if (!isCharacter(ref state, "Ошибка запроса")) return;
 
-            List<string> itemsChar = new List<string>();
             List<string> ifRuleList = new List<string>();
             List<string> thenRuleList = new List<string>();
 
-            for (int i = 0; i < characteristicBox.Items.Count; i++) itemsChar.Add((string)characteristicBox.Items[i]);
             for (int i = 0; i < rulesDB.Items.Count; i++)
             {
                 ifRuleList.Add((string)rulesDB.Items[i].SubItems[0].Text);
                 thenRuleList.Add((string)rulesDB.Items[i].SubItems[1].Text);
             }
-
-            int COUNT_OF_RULE = rulesDB.Items.Count;
-
-            //TODO: Разработать основной алгоритм программы с прямым выводом.
             
             List<string> request;
             getSplitCharacteristics(out request, ref state);
@@ -117,6 +111,7 @@ namespace Lab2_Machine_Int._
                 }
             }
 
+            int pos = -1;
             for (int i = 0; i < request.Count; i++)
             {
                 if (request[i] == OR) continue;
@@ -124,12 +119,11 @@ namespace Lab2_Machine_Int._
                 int searchResult = -1;
                 for (int j = 0; j < ifRuleList.Count; j++)
                 {
-                    int pos;
                     if (!inStringOR(ifRuleList[j], request[i])) continue;
-                    searchResult = j;
+                    searchResult = pos = j;
                     break;
                 }
-                
+
                 if (searchResult != -1)
                 {
                     request.RemoveAt(i);
@@ -137,11 +131,9 @@ namespace Lab2_Machine_Int._
                     i -= 1;
                     continue;
                 }
-                if (itemsChar.IndexOf(request[i]) == -1)
+                if (characteristicBox.Items.IndexOf(request[i]) == -1)
                 {
                     ExpertSystemResult result = new ExpertSystemResult();
-                    int pos = thenRuleList.IndexOf(request[i]);
-
                     result.showWindow(request[i], ifRuleList[pos]);
                     return;
                 }
@@ -225,6 +217,7 @@ namespace Lab2_Machine_Int._
             if (pos == -1) return false;
 
             str = str.Remove(pos, substring.Length);
+            if (str == "") return true;
             string[] substrings = str.Split(' ');
 
             for (int i = 0; i < substrings.Length; i++)
@@ -629,12 +622,6 @@ namespace Lab2_Machine_Int._
         }
         #endregion
         #region The another functions for settings apllication
-        private void rulesDB_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
-        {
-            rulesDB.ColumnWidthChanged -= rulesDB_ColumnWidthChanged;
-            rulesDB.Columns[e.ColumnIndex].Width = 213;
-            rulesDB.ColumnWidthChanged += rulesDB_ColumnWidthChanged;
-        }
         private void exitFromApplication(object sender, EventArgs e)
         {
             Application.Exit();

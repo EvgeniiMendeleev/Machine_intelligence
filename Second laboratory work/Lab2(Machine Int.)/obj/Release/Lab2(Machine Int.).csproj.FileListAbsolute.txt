@@ -18,3 +18,4 @@ C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laborato
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).csproj.GenerateResource.Cache
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).exe
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).pdb
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Second laboratory work\Lab2(Machine Int.)\obj\Release\Lab2(Machine Int.).csprojResolveAssemblyReference.cache
