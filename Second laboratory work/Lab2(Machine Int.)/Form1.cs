@@ -76,6 +76,8 @@ namespace Lab2_Machine_Int._
             List<string> request;
             getSplitCharacteristics(out request, ref state);
 
+            int pos = -1;
+
             while(request.IndexOf(AND) != -1)
             {
                 for (int i = 1; i < request.Count - 1; i++)
@@ -100,18 +102,19 @@ namespace Lab2_Machine_Int._
                     {
                         request.RemoveRange(i - 1, 3);
                         request.Insert(i - 1, thenRuleList[searchResult]);
+                        pos = searchResult;
                         i -= 1;
                     }
                     else if (!secondSearch)
                     {
                         request.RemoveRange(i - 1, 3);
                         request.Insert(i - 1, thenRuleList[anotherSearch]);
+                        pos = anotherSearch;
                         i -= 1;
                     }
                 }
             }
 
-            int pos = -1;
             for (int i = 0; i < request.Count; i++)
             {
                 if (request[i] == OR) continue;
@@ -413,7 +416,7 @@ namespace Lab2_Machine_Int._
                 }
 
                 rulesDB.Items.Clear();
-                while (binaryStream.PeekChar() > -1)
+                while (binaryStream.BaseStream.Position < binaryStream.BaseStream.Length || binaryStream.PeekChar() > -1)
                 {
                     ListViewItem item = new ListViewItem();
 
