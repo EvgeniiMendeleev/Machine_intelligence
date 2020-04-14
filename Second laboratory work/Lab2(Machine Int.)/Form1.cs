@@ -530,7 +530,13 @@ namespace Lab2_Machine_Int._
                 ListBox.SelectedObjectCollection selectedItems = characteristicBox.SelectedItems;
                 for (int i = 0; i < rules.Count; i++)
                 {
-                    foreach (string str in rules[i].Split(' '))
+                    List<string>splitRule = new List<string>(rules[i].Split(' '));
+                    while(splitRule.IndexOf("") != -1) splitRule.Remove("");
+
+                    List<string> substrings;
+                    getSplitCharacteristics(out substrings, ref splitRule);
+
+                    foreach(string str in substrings)
                     {
                         if (str == OR || str == AND) continue;
                         if (selectedItems.IndexOf(str) != -1)
