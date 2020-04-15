@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Non_Result_System;
 
 namespace Expert_System_Namespace_
 {
-    public partial class ExpertSystemResult: Form
+    public partial class ExpertSystemResult : Form
     {
         public ExpertSystemResult()
         {
@@ -19,12 +20,12 @@ namespace Expert_System_Namespace_
 
         public void showWindow(string nameOfVirus, string descriptionOfVirus)
         {
-            resultTextBox.Text = nameOfVirus;
-            descriptionTextBox.Text = descriptionOfVirus;
+            virusNameBox.Text = nameOfVirus;
+            descriptionBox.Text = descriptionOfVirus;
             this.ShowDialog();
         }
 
-        private void close(object sender, EventArgs e)
+        public void close(object sender, EventArgs e)
         {
             this.Close();
         }

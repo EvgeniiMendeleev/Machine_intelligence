@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Expert_System_Namespace_;
-using About_Box_Namespace_;
 using Non_Result_System;
+using About_Box_Namespace_;
 
 namespace Lab2_Machine_Int._
 {
@@ -66,6 +66,12 @@ namespace Lab2_Machine_Int._
 
             List<string> ifRuleList = new List<string>();
             List<string> thenRuleList = new List<string>();
+            List<string> characteristicsList = new List<string>();
+
+            for (int i = 0; i < characteristicBox.Items.Count; i++)
+            {
+                characteristicsList.Add(characteristicBox.Items[i] as string);
+            }
 
             for (int i = 0; i < rulesDB.Items.Count; i++)
             {
@@ -115,14 +121,86 @@ namespace Lab2_Machine_Int._
                 }
             }
 
+            #region Пока что ненужный кусок кода
+                /*int count = ifRuleList.Where(elem => elem.IndexOf(request.First<string>()) != -1).Count();
+                if (count > 1)
+                {
+                    bool isYes = false;
+
+                    string subRequest = request[k];
+                    IEnumerable<string> rulesEnumerable = ifRuleList.Where(elem => elem.IndexOf(subRequest) != -1);
+                    List<string> rules = new List<string>();
+
+                    for (int i = 0; i < rulesEnumerable.Count(); i++) rules.Add(rulesEnumerable.ElementAt<string>(i));
+
+                    for (int j = 0; j < rules.Count; j++)
+                    {
+                        List<string> rule = new List<string>(rules[j].Split(' '));
+                        while (rule.IndexOf("") != -1) rule.Remove("");
+
+                        List<string> outResult;
+                        getSplitCharacteristics(out outResult, ref rule);
+
+                        if (outResult.IndexOf(AND) != -1) continue;
+
+                        for (int i = 0; i < outResult.Count; i++)
+                        {
+                            if (outResult[i] != OR) continue;
+
+                            string str = "";
+                            bool isRight;
+                            if (outResult[i - 1] == subRequest)
+                            {
+                                isRight = false;
+                                str = outResult[i + 1];
+                            }
+                            else if (outResult[i + 1] == subRequest)
+                            {
+                                isRight = true;
+                                str = outResult[i - 1];
+                            }
+                            else continue;
+
+                            DialogResult result = MessageBox.Show("Вирус обладает таким признаком как " + str + "?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                            if (result == DialogResult.Yes)
+                            {
+                                pos = isRight ? ifRuleList.IndexOf(str + " или " + subRequest) : ifRuleList.IndexOf(subRequest + " или " + str);
+                                request[0] = thenRuleList[pos];
+                                isYes = true;
+                                break;
+                            }
+                        }
+
+                        if (isYes) break;
+                    }
+
+                    if (!isYes)
+                    {
+                        if (request.Count > 1) request.RemoveRange(0, 2);
+                        else
+                        {
+                            NoneResultSystem orNoneResult = new NoneResultSystem();
+                            orNoneResult.showWindow();
+                            return;
+                        }
+                    }
+                }*/
+                #endregion
+            
             for (int i = 0; i < request.Count; i++)
             {
                 if (request[i] == OR) continue;
+
+                bool isQuestions = false;
+                if (ifRuleList.Where(elem => elem.IndexOf(request[i]) != -1).Count() > 1) isQuestions = !isQuestions;
 
                 int searchResult = -1;
                 for (int j = 0; j < ifRuleList.Count; j++)
                 {
                     if (!inStringOR(ifRuleList[j], request[i])) continue;
+                    if (isQuestions && askQuestion(ifRuleList[j], request[i]) != DialogResult.Yes) continue;
+
                     searchResult = pos = j;
                     break;
                 }
@@ -271,6 +349,60 @@ namespace Lab2_Machine_Int._
         {
             AboutBox programInfo = new AboutBox();
             programInfo.ShowDialog();
+        }
+        private DialogResult askQuestion(string ifRule, string subRequest)
+        {
+            List<string> ifPart = new List<string>(ifRule.Split(' '));
+            while (ifPart.IndexOf("") != -1) ifPart.Remove("");
+
+            List<string> outIfPart;
+            getSplitCharacteristics(out outIfPart, ref ifPart);
+
+            int pos = outIfPart.IndexOf(subRequest);
+
+            if (pos == 0 && outIfPart[pos + 1] == AND) return DialogResult.No;
+            else if (pos == outIfPart.Count - 1 && outIfPart[pos - 1] == AND) return DialogResult.No;
+            else if (pos > 0 && pos < outIfPart.Count - 2 && outIfPart[pos - 1] == AND || outIfPart[pos + 1] == AND) return DialogResult.No;
+
+            if (pos == 0)
+            {
+                string anotherPart = "";
+                for (int i = 2; i < outIfPart.Count - 1; i++)
+                {
+                    anotherPart += outIfPart[i] + ' ';
+                }
+                anotherPart += outIfPart.Last<string>();
+
+                return MessageBox.Show("Вирус обладает таким признаком как " + anotherPart + "?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            }
+            else if(pos == outIfPart.Count - 1)
+            {
+                string anotherPart = "";
+                for (int i = 0; outIfPart[i + 1] != subRequest; i++)
+                {
+                    anotherPart += outIfPart[i] + ' ';
+                }
+                anotherPart = anotherPart.Remove(anotherPart.Length - 1);
+
+                return MessageBox.Show("Вирус обладает таким признаком как " + anotherPart + "?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            }
+            else
+            {
+                string leftPart = "";
+                string rightPart = "";
+
+                for (int i = 0; outIfPart[i + 1] != subRequest; i++)
+                {
+                    leftPart += outIfPart[i] + ' ';
+                }
+
+                for (int i = pos + 2; i < outIfPart.Count - 1; i--)
+                {
+                    rightPart += outIfPart[i] + ' ';
+                }
+
+                return MessageBox.Show("Вирус обладает таким признаком как " + rightPart + " или " + leftPart + "?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            }
         }
         #endregion
         #region The functions for check datas
