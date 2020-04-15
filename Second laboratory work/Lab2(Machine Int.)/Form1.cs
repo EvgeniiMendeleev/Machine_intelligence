@@ -395,13 +395,15 @@ namespace Lab2_Machine_Int._
                 {
                     leftPart += outIfPart[i] + ' ';
                 }
+                leftPart = leftPart.Remove(leftPart.Length - 1);
 
-                for (int i = pos + 2; i < outIfPart.Count - 1; i--)
+                for (int i = pos + 2; i < outIfPart.Count; i++)
                 {
                     rightPart += outIfPart[i] + ' ';
                 }
+                rightPart = rightPart.Remove(rightPart.Length - 1);
 
-                return MessageBox.Show("Вирус обладает таким признаком как " + rightPart + " или " + leftPart + "?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                return MessageBox.Show("Вирус обладает таким признаком как " + leftPart + " или " + rightPart + "?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             }
         }
         #endregion
