@@ -6,17 +6,53 @@ using System.Threading.Tasks;
 
 namespace FramesModel
 {
-    enum PointerOnAttribute {  }
-    enum TypeOfData { FRAME, INTEGER, REAL, BOOL, LISP, TEXT, LIST }
-    struct Slot
+    enum TypeOfData { FRAME, INTEGER, REAL, BOOL, LISP, ТЕХТ, LIST }
+    enum TypeOfInheritance { Unique, Same, Range, Override }
+    class Slot
     {
-        string name;
+        private string name;
+        TypeOfData ptrToType;
+        TypeOfInheritance ptrToInheritance;
+        private object data
+        {
+            set
+            {
+                if (value == "null")
+                {
+                    ifRemoved();
+                    return;
+                }
+                if (value == "") return;
+
+                ifAdded();
+                data = value;
+            }
+
+            get
+            {
+                if (data == null) ifNeeded(); 
+                return data; 
+            }
+        }
+
+        private void ifAdded()
+        {
+        }
+
+        private void ifNeeded()
+        {
+        }
+
+        private void ifRemoved()
+        {
+        }
+
+        delegate void connectedProcedure();
     }
 
     class Frame
     {
         string name;
-        PointerOnAttribute ptr;
         List<Slot> slots = new List<Slot>();
     }
 }

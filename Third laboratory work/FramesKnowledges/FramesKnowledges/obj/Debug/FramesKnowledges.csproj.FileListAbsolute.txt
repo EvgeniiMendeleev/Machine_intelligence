@@ -8,3 +8,5 @@ C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laborator
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Debug\FramesKnowledges.csproj.GenerateResource.Cache
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Debug\FramesKnowledges.exe
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Debug\FramesKnowledges.pdb
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Debug\FramesKnowledges.AboutSlotSettings.resources
+C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Debug\FramesKnowledges.SlotAddSettings.resources

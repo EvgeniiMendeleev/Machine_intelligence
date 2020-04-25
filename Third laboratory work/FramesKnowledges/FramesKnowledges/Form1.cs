@@ -15,11 +15,17 @@ namespace FramesKnowledges
         public Form1()
         {
             InitializeComponent();
+            frameNameText.Text += "Мой первый кадр";
         }
 
         private void getInfoAboutProgram(object sender, EventArgs e)
         {
             new AboutBox().ShowDialog();
+        }
+
+        private void showFrameAddSettings(object sender, EventArgs e)
+        {
+            new SlotAddSettings().ShowDialog();
         }
     }
 }
