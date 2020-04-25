@@ -12,6 +12,7 @@ namespace FramesKnowledges
 {
     public partial class Form1 : Form
     {
+        public int a;
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +26,14 @@ namespace FramesKnowledges
 
         private void showFrameAddSettings(object sender, EventArgs e)
         {
-            new SlotAddSettings().ShowDialog();
+            SlotAddSettings window = new SlotAddSettings();
+
+            if (window.ShowDialog() == DialogResult.Yes)
+            {
+                foreach (string str in window.getValue())
+                {
+                }
+            }
         }
     }
 }

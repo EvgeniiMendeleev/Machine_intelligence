@@ -85,6 +85,7 @@
             this.ptrToInheritanceColumn,
             this.ptrToTypeColumn,
             this.dataColumn});
+            this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(202, 110);
             this.listView1.Name = "listView1";
