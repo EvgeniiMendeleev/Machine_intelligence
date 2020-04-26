@@ -20,18 +20,33 @@ namespace FramesKnowledges
             ptrToTypeComboBox.SelectedIndex = 0;
         }
 
-        public List<string> getValue()
+        public List<string> getDatasFromForm()
         {
             return valuesFromSettings;
+        }
+
+        private bool checkFields()
+        {
+            if (slotNameText.Text.Length == 0 || dataTextBox.Text.Length == 0) return true;
+            return false;
         }
 
         private void acceptAddSlot(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Yes;
+            object dataFromSlot;
 
             switch(ptrToTypeComboBox.Text)
             {
                 case "FRAME":
+                    foreach (char ch in dataTextBox.Text)
+                    {
+                        if (ch != ' ' && !Char.IsLetter(ch))
+                        {
+                            MessageBox.Show("Ошибка добавления слота!", "В значении присутствуют сторонние символы!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
                     break;
                 case "INTEGER":
                     break;
