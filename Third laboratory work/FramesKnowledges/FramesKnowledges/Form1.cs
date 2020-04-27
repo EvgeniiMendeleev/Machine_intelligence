@@ -163,7 +163,6 @@ namespace FramesKnowledges
             }
 
             string nameOfFrame = framesListBox.SelectedItem.ToString();
-
             showInfoAboutFrameOnName(nameOfFrame);
         }
         #endregion
