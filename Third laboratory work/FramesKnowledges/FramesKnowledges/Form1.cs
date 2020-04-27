@@ -13,13 +13,14 @@ namespace FramesKnowledges
 {
     public partial class Form1 : Form
     {
-        private List<Frame> frames = new List<Frame>();
+        private Dictionary<string, Frame> frames = new Dictionary<string, Frame>();
 
         public Form1()
         {
             InitializeComponent();
         }
 
+        #region The info windows
         private void showError(string nameOfError, string textOfError)
         {
             MessageBox.Show(textOfError, nameOfError, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -29,7 +30,7 @@ namespace FramesKnowledges
         {
             new AboutBox().ShowDialog();
         }
-
+        #endregion
         private void enterANameFrame(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -49,23 +50,42 @@ namespace FramesKnowledges
             return result;
         }
 
-        private void showFrameAddSettings(object sender, EventArgs e)
+        private void showSlotAddSettings(object sender, EventArgs e)
         {
-            SlotAddSettings window = new SlotAddSettings();
-
-            if (window.ShowDialog() == DialogResult.Yes)
+            if (framesListBox.SelectedItem == null)
             {
-                foreach (string str in window.getDatasFromForm())
+                showError("Ошибка добавления слота!", "Для того, чтобы добавить слот, выберите кадр из списка!");
+                return;
+            }
+
+            SlotAddSettings window = new SlotAddSettings();
+            DialogResult result = window.ShowDialog();
+            if (result == DialogResult.No || result == DialogResult.Cancel) return;
+
+            List<string> slotSettings = window.getDatasFromForm();
+
+            if (slotSettings[2] == "FRAME")
+            {
+                for (int i = 0; i < framesListBox.Items.Count; i++)
                 {
+                    if (framesListBox.Items[i].ToString() == slotSettings.Last<string>())
+                    {
+                        Slot slotForFrame = Slot.createSlot(slotSettings[0], slotSettings[1], slotSettings[2], slotSettings[3]);
+                        frames[framesListBox.SelectedItem.ToString()].setSlot(slotForFrame);
+                        return;
+                    }
                 }
+
+                showError("Ошибка добавления слота!", "Такого кадра нету в списке!");
             }
         }
 
+        #region The actions to frame
         private void addFrame(object sender, EventArgs e)
         {
             if (nameOfFrameTextBox.Text.Length == 0)
             {
-                showError("Ошибка", "Какая - то ошибка!");
+                showError("Ошибка добавления кадра!", "Поле с названием кадра пустое!");
                 return;
             }
 
@@ -74,6 +94,7 @@ namespace FramesKnowledges
                 if (ch != ' ' && !Char.IsLetter(ch))
                 {
                     showError("Ошибка ввода!", "Присутствуют посторонние символы в названии кадра");
+                    return;
                 }
             }
 
@@ -82,61 +103,33 @@ namespace FramesKnowledges
 
             string nameOfFrame = getConnectedString(ref splitNameOfFrame);
 
-            frames.Add(Frame.createFrame(nameOfFrame));
+            frames.Add(nameOfFrame, Frame.createFrame());
             framesListBox.Items.Add(nameOfFrame);
 
             nameOfFrameTextBox.Clear();
         }
-
         private void deleteFrame(object sender, EventArgs e)
         {
-            /*if (framesListBox.SelectedItems.Count == 0)
+            if (framesListBox.SelectedItems.Count == 0)
             {
                 showError("Ошибка удаления!", "Не был выбран кадр!");
                 return;
             }
-
-            Console.WriteLine("*****************ДО**************************");
-            foreach (Frame frame in frames)
-            {
-                Console.WriteLine(frame.getName());
-            }
-
-            string deleteNameFrame = framesListBox.SelectedItem.ToString();
-            
-            for (int i = 0; i < frames.Count; i++)
-            {
-                if (frames[i].getName() == deleteNameFrame)
-                {
-                    frames.RemoveAt(i);
-                    framesListBox.Items.Remove(framesListBox.SelectedItem);
-                    break;
-                }
-            }
-
-            for (int i = 0; i < frames.Count; i++)
-            {
-                frames[i].deleteSlot(deleteNameFrame);
-            }
-
-            Console.WriteLine("*****************ПОСЛЕ***********************");
-            foreach (Frame frame in frames)
-            {
-                Console.WriteLine(frame.getName());
-            }*/
         }
-
         private void showInfoAboutFrame(object sender, EventArgs e)
         {
-            if (framesListBox.SelectedItems.Count == 0)
+            if (framesListBox.SelectedItem == null)
             {
                 showError("Ошибка отображения!", "Не был выбран кадр!");
                 return;
             }
 
-            Frame selectedFrame = frames.Find(frame => frame.getName() == framesListBox.SelectedItem.ToString());
+            frameInfoView.Items.Clear();
 
-            frameNameText.Text = selectedFrame.getName();
+            string nameOfFrame = framesListBox.SelectedItem.ToString();
+            Frame selectedFrame = frames[nameOfFrame];
+
+            frameNameText.Text = nameOfFrame;
             for (int i = 0; i < selectedFrame.getCountSlots(); i++)
             {
                 Slot slot = selectedFrame.getSlot(i);
@@ -150,5 +143,6 @@ namespace FramesKnowledges
                 frameInfoView.Items.Add(item);
             }
         }
+        #endregion
     }
 }

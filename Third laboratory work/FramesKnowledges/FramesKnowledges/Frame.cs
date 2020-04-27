@@ -6,23 +6,35 @@ using System.Threading.Tasks;
 
 namespace FramesModel
 {
-    enum TypeOfData { FRAME, INTEGER, REAL, BOOL, LISP, ТЕХТ, LIST }
-    enum TypeOfInheritance { Unique, Same, Range, Override }
     class Slot
     {
         private string name;
-        TypeOfData ptrToType;
-        TypeOfInheritance ptrToInheritance;
-        private object data
+        private string ptrToType;
+        private string ptrToInheritance;
+        private Slot(string name, string ptrToType, string ptrToInheritance, string data) 
+        {
+            this.name = name;
+            this.ptrToType = ptrToType;
+            this.ptrToInheritance = ptrToInheritance;
+            this.Data = data;
+        }
+
+        public static Slot createSlot(string name, string ptrToType, string ptrToInheritance, string data)
+        {
+            return new Slot(name, ptrToType, ptrToInheritance, data);
+        }
+
+        private string data;
+        public string Data
         {
             set
             {
-                if (value.ToString() == "null")
+                if (value == "null")
                 {
                     ifRemoved();
                     return;
                 }
-                if (value.ToString() == "") return;
+                if (value == "") return;
 
                 ifAdded();
                 data = value;
@@ -56,42 +68,12 @@ namespace FramesModel
 
         public string getPtrToType()
         {
-            switch (this.ptrToType)
-            {
-                case TypeOfData.BOOL:
-                    return "BOOL";
-                case TypeOfData.FRAME:
-                    return "FRAME";
-                case TypeOfData.INTEGER:
-                    return "INTEGER";
-                case TypeOfData.LISP:
-                    return "LISP";
-                case TypeOfData.LIST:
-                    return "LIST";
-                case TypeOfData.REAL:
-                    return "REAL";
-                case TypeOfData.ТЕХТ:
-                    return "TEXT";
-                default:
-                    return null;
-            }
+            return this.ptrToType;
         }
 
         public string getPtrToInheritance()
         {
-            switch (this.ptrToInheritance)
-            {
-                case TypeOfInheritance.Override:
-                    return "O";
-                case TypeOfInheritance.Range:
-                    return "R";
-                case TypeOfInheritance.Same:
-                    return "S";
-                case TypeOfInheritance.Unique:
-                    return "U";
-                default:
-                    return null;
-            }
+            return this.ptrToInheritance;
         }
 
         public object getData()
@@ -102,22 +84,23 @@ namespace FramesModel
 
     class Frame
     {
-        string name;
         List<Slot> slots = new List<Slot>();
 
-        private Frame(string name)
-        {
-            this.name = name;
-        }
+        private Frame() {}
 
-        public static Frame createFrame(string name)
+        public static Frame createFrame()
         {
-            return new Frame(name);
+            return new Frame();
         }
 
         public Slot getSlot(string name)
         {
             return slots.Find(nameSlot => nameSlot.getName() == name);
+        }
+
+        public void setSlot(Slot slot)
+        {
+            slots.Add(slot);
         }
 
         public Slot getSlot(int i)
@@ -139,11 +122,6 @@ namespace FramesModel
                     slots.RemoveAt(i);
                 }
             }
-        }
-
-        public string getName()
-        {
-            return this.name;
         }
     }
 }

@@ -12,12 +12,28 @@ namespace FramesKnowledges
 {
     public partial class SlotAddSettings : Form
     {
-        public List<string> valuesFromSettings = new List<string>();
+        private List<string> valuesFromSettings = new List<string>();
         public SlotAddSettings()
         {
             InitializeComponent();
             ptrToInheritanceComboBox.SelectedIndex = 0;
             ptrToTypeComboBox.SelectedIndex = 0;
+        }
+
+        private void showError(string nameOfError, string textOfError)
+        {
+            MessageBox.Show(textOfError, nameOfError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private string getConnectedString(ref List<string> substrings)
+        {
+            string result = substrings.First<string>();
+            for (int i = 1; i < substrings.Count; i++)
+            {
+                result += ' ' + substrings[i];
+            }
+
+            return result;
         }
 
         public List<string> getDatasFromForm()
@@ -33,8 +49,27 @@ namespace FramesKnowledges
 
         private void acceptAddSlot(object sender, EventArgs e)
         {
+            if (slotNameText.Text.Length == 0)
+            {
+                showError("Ошибка создания слота!", "Не указано имя слота!");
+                return;
+            }
+            else if (dataTextBox.Text.Length == 0)
+            {
+                showError("Ошибка создания слота!", "Вы не задали значение слота!");
+                return;
+            }
+
             this.DialogResult = DialogResult.Yes;
-            object dataFromSlot;
+
+            List<string> splitData = new List<string>(dataTextBox.Text.Split(' '));
+            while (splitData.IndexOf("") != -1) splitData.Remove("");
+
+            valuesFromSettings.Add(slotNameText.Text);
+            valuesFromSettings.Add(ptrToInheritanceComboBox.SelectedItem.ToString());
+            valuesFromSettings.Add(ptrToTypeComboBox.SelectedItem.ToString());
+
+            string data = getConnectedString(ref splitData);
 
             switch(ptrToTypeComboBox.Text)
             {
@@ -47,6 +82,7 @@ namespace FramesKnowledges
                             return;
                         }
                     }
+                    valuesFromSettings.Add(data);
                     break;
                 case "INTEGER":
                     break;
@@ -62,17 +98,11 @@ namespace FramesKnowledges
                     break;
             }
 
-            valuesFromSettings.Add(slotNameText.Text);
-            valuesFromSettings.Add(ptrToInheritanceComboBox.SelectedItem.ToString());
-            valuesFromSettings.Add(ptrToTypeComboBox.SelectedItem.ToString());
-            valuesFromSettings.Add(dataTextBox.Text);
-
-            this.Close();
         }
 
         private void exitFromSettings(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.No;
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }
