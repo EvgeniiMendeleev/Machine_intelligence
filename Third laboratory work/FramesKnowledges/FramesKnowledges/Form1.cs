@@ -64,20 +64,24 @@ namespace FramesKnowledges
 
             List<string> slotSettings = window.getDatasFromForm();
 
-            if (slotSettings[2] == "FRAME")
+            if (slotSettings[2] != "FRAME")
             {
-                for (int i = 0; i < framesListBox.Items.Count; i++)
-                {
-                    if (framesListBox.Items[i].ToString() == slotSettings.Last<string>())
-                    {
-                        Slot slotForFrame = Slot.createSlot(slotSettings[0], slotSettings[1], slotSettings[2], slotSettings[3]);
-                        frames[framesListBox.SelectedItem.ToString()].setSlot(slotForFrame);
-                        return;
-                    }
-                }
-
-                showError("Ошибка добавления слота!", "Такого кадра нету в списке!");
+                Slot slotForFrame = Slot.createSlot(slotSettings[0], slotSettings[2], slotSettings[1], slotSettings[3]);
+                frames[framesListBox.SelectedItem.ToString()].setSlot(slotForFrame);
+                return;
             }
+
+            for (int i = 0; i < framesListBox.Items.Count; i++)
+            {
+                if (framesListBox.Items[i].ToString() == slotSettings.Last<string>())
+                {
+                    Slot slotForFrame = Slot.createSlot(slotSettings[0], slotSettings[2], slotSettings[1], slotSettings[3]);
+                    frames[framesListBox.SelectedItem.ToString()].setSlot(slotForFrame);
+                    return;
+                }
+            }
+
+            showError("Ошибка добавления слота!", "Такого кадра нету в списке!");
         }
 
         private void deleteSlotFromFrame(object sender, EventArgs e)

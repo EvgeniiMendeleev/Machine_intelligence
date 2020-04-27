@@ -54,12 +54,24 @@ namespace FramesKnowledges
                 return;
             }
 
-            this.DialogResult = DialogResult.Yes;
-
             List<string> splitData = new List<string>(dataTextBox.Text.Split(' '));
             while (splitData.IndexOf("") != -1) splitData.Remove("");
 
-            valuesFromSettings.Add(slotNameText.Text);
+            List<string> splitName = new List<string>(slotNameText.Text.Split(' '));
+            while (splitName.IndexOf("") != -1) splitName.Remove("");
+
+            string nameOfSlot = getConnectedString(ref splitName);
+
+            foreach (char ch in nameOfSlot)
+            {
+                if (ch != ' ' && !Char.IsLetter(ch))
+                {
+                    showError("Ошибка добавления слота!", "В названии слота присутствуют сторонние символы!");
+                    return;
+                }
+            }
+
+            valuesFromSettings.Add(nameOfSlot);
             valuesFromSettings.Add(ptrToInheritanceComboBox.SelectedItem.ToString());
             valuesFromSettings.Add(ptrToTypeComboBox.SelectedItem.ToString());
 
@@ -68,30 +80,32 @@ namespace FramesKnowledges
             switch(ptrToTypeComboBox.Text)
             {
                 case "FRAME":
-                    foreach (char ch in dataTextBox.Text)
+                    foreach (char ch in data)
                     {
                         if (ch != ' ' && !Char.IsLetter(ch))
                         {
-                            MessageBox.Show("Ошибка добавления слота!", "В значении присутствуют сторонние символы!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            showError("Ошибка добавления слота!", "В значении присутствуют сторонние символы!");
                             return;
                         }
                     }
                     valuesFromSettings.Add(data);
                     break;
-                case "INTEGER":
-                    break;
-                case "REAL":
-                    break;
                 case "BOOL":
+                    if (data != "true" && data != "false")
+                    {
+                        showError("Ошибка добавления слота!", "В случае BOOL значение должно быть true или false!");
+                        return;
+                    }
+                    valuesFromSettings.Add(data);
                     break;
                 case "LISP":
                     break;
                 case "TEXT":
-                    break;
-                case "LIST":
+                    valuesFromSettings.Add(data);
                     break;
             }
 
+            this.DialogResult = DialogResult.Yes;
         }
 
         private void exitFromSettings(object sender, EventArgs e)

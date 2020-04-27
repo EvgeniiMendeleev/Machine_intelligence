@@ -108,14 +108,10 @@
             this.ptrToTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ptrToTypeComboBox.FormattingEnabled = true;
             this.ptrToTypeComboBox.Items.AddRange(new object[] {
-            "INTEGER",
-            "REAL",
             "BOOL",
             "FRAME",
             "LISP",
-            "TEXT",
-            "LIST",
-            "TABLE"});
+            "TEXT"});
             this.ptrToTypeComboBox.Location = new System.Drawing.Point(171, 86);
             this.ptrToTypeComboBox.Name = "ptrToTypeComboBox";
             this.ptrToTypeComboBox.Size = new System.Drawing.Size(181, 21);
