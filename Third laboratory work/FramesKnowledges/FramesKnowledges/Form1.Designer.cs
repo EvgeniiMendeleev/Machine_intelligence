@@ -168,6 +168,7 @@
             this.button2.TabIndex = 7;
             this.button2.Text = "Удалить слот";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.deleteSlotFromFrame);
             // 
             // label4
             // 

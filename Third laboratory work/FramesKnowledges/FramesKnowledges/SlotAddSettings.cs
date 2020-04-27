@@ -41,12 +41,6 @@ namespace FramesKnowledges
             return valuesFromSettings;
         }
 
-        private bool checkFields()
-        {
-            if (slotNameText.Text.Length == 0 || dataTextBox.Text.Length == 0) return true;
-            return false;
-        }
-
         private void acceptAddSlot(object sender, EventArgs e)
         {
             if (slotNameText.Text.Length == 0)

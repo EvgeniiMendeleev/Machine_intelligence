@@ -80,6 +80,15 @@ namespace FramesKnowledges
             }
         }
 
+        private void deleteSlotFromFrame(object sender, EventArgs e)
+        {
+            if(frameInfoView.SelectedItems.Count == 0)
+            {
+                showError("Ошибка удаления слота!", "Выберите слот для удаления из кадра в информации о кадре!");
+                return;
+            }
+        }
+
         #region The actions to frame
         private void addFrame(object sender, EventArgs e)
         {
