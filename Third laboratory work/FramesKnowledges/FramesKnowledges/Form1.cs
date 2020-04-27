@@ -91,6 +91,11 @@ namespace FramesKnowledges
                 showError("Ошибка удаления слота!", "Выберите слот для удаления из кадра в информации о кадре!");
                 return;
             }
+
+            string nameOfFrame = frameNameText.Text;
+            frames[nameOfFrame].deleteSlot(frameInfoView.SelectedItems[0].Text);
+
+            showInfoAboutFrameOnName(nameOfFrame);
         }
 
         #region The actions to frame
@@ -121,12 +126,32 @@ namespace FramesKnowledges
 
             nameOfFrameTextBox.Clear();
         }
+        //TODO: Не написнаа функция удаления кадра!
         private void deleteFrame(object sender, EventArgs e)
         {
             if (framesListBox.SelectedItems.Count == 0)
             {
                 showError("Ошибка удаления!", "Не был выбран кадр!");
                 return;
+            }
+        }
+        private void showInfoAboutFrameOnName(string name)
+        {
+            frameInfoView.Items.Clear();
+            Frame selectedFrame = frames[name];
+
+            frameNameText.Text = name;
+            for (int i = 0; i < selectedFrame.getCountSlots(); i++)
+            {
+                Slot slot = selectedFrame.getSlot(i);
+
+                ListViewItem item = new ListViewItem();
+                item.Text = slot.getName();
+                item.SubItems.Add(slot.getPtrToInheritance());
+                item.SubItems.Add(slot.getPtrToType());
+                item.SubItems.Add(slot.getData().ToString());
+
+                frameInfoView.Items.Add(item);
             }
         }
         private void showInfoAboutFrame(object sender, EventArgs e)
@@ -137,24 +162,9 @@ namespace FramesKnowledges
                 return;
             }
 
-            frameInfoView.Items.Clear();
-
             string nameOfFrame = framesListBox.SelectedItem.ToString();
-            Frame selectedFrame = frames[nameOfFrame];
 
-            frameNameText.Text = nameOfFrame;
-            for (int i = 0; i < selectedFrame.getCountSlots(); i++)
-            {
-                Slot slot = selectedFrame.getSlot(i);
-                
-                ListViewItem item = new ListViewItem();
-                item.Text = slot.getName();
-                item.SubItems.Add(slot.getPtrToInheritance());
-                item.SubItems.Add(slot.getPtrToType());
-                item.SubItems.Add(slot.getData().ToString());
-
-                frameInfoView.Items.Add(item);
-            }
+            showInfoAboutFrameOnName(nameOfFrame);
         }
         #endregion
     }
