@@ -64,21 +64,30 @@ namespace FramesKnowledges
 
             List<string> slotSettings = window.getDatasFromForm();
 
+            string nameOfFrame = framesListBox.SelectedItem.ToString();
+            for (int j = 0; j < frames[nameOfFrame].getCountSlots(); j++)
+            {
+                if (slotSettings[0] == frames[nameOfFrame].getSlot(j).getName())
+                {
+                    showError("Ошибка добавления слота!", "Такой слот уже определён в кадре!");
+                    return;
+                }
+            }
+
             if (slotSettings[2] != "FRAME")
             {
                 Slot slotForFrame = Slot.createSlot(slotSettings[0], slotSettings[2], slotSettings[1], slotSettings[3]);
-                frames[framesListBox.SelectedItem.ToString()].setSlot(slotForFrame);
+                frames[nameOfFrame].setSlot(slotForFrame);
                 return;
             }
 
             for (int i = 0; i < framesListBox.Items.Count; i++)
             {
-                if (framesListBox.Items[i].ToString() == slotSettings.Last<string>())
-                {
-                    Slot slotForFrame = Slot.createSlot(slotSettings[0], slotSettings[2], slotSettings[1], slotSettings[3]);
-                    frames[framesListBox.SelectedItem.ToString()].setSlot(slotForFrame);
-                    return;
-                }
+                if (framesListBox.Items[i].ToString() != slotSettings.Last<string>()) continue;
+
+                Slot slotForFrame = Slot.createSlot(slotSettings[0], slotSettings[2], slotSettings[1], slotSettings[3]);
+                frames[nameOfFrame].setSlot(slotForFrame);
+                return;
             }
 
             showError("Ошибка добавления слота!", "Такого кадра нету в списке!");
@@ -121,6 +130,12 @@ namespace FramesKnowledges
 
             string nameOfFrame = getConnectedString(ref splitNameOfFrame);
 
+            if (framesListBox.Items.Contains(nameOfFrame))
+            {
+                showError("Ошибка добавления кадра!", "Такой кадр уже определён в списке кадров!");
+                return;
+            }
+
             frames.Add(nameOfFrame, Frame.createFrame());
             framesListBox.Items.Add(nameOfFrame);
 
@@ -134,6 +149,26 @@ namespace FramesKnowledges
                 showError("Ошибка удаления!", "Не был выбран кадр!");
                 return;
             }
+
+            string nameOfFrame = framesListBox.SelectedItem.ToString();
+            List<string> keys = new List<string>(frames.Keys);
+
+            for (int i = 0; i < keys.Count; i++)
+            {
+                string keyName = keys[i];
+                for (int j = 0; j < frames[keyName].getCountSlots(); j++)
+                {
+                    Slot slot = frames[keyName].getSlot(j);
+
+                    if (slot.getData() == nameOfFrame)
+                    {
+                        frames[keyName].deleteSlot(slot.getName());
+                    }
+                }
+            }
+
+            frames.Remove(nameOfFrame);
+            framesListBox.Items.Remove(nameOfFrame);
         }
         private void showInfoAboutFrameOnName(string name)
         {

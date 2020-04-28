@@ -35,7 +35,7 @@
             this.ptrToInheritanceComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.ptrToTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.addButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.dataTextBox = new System.Windows.Forms.TextBox();
@@ -117,15 +117,15 @@
             this.ptrToTypeComboBox.Size = new System.Drawing.Size(181, 21);
             this.ptrToTypeComboBox.TabIndex = 6;
             // 
-            // button1
+            // addButton
             // 
-            this.button1.Location = new System.Drawing.Point(196, 169);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Добавить";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.acceptAddSlot);
+            this.addButton.Location = new System.Drawing.Point(196, 169);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(75, 23);
+            this.addButton.TabIndex = 7;
+            this.addButton.Text = "Добавить";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.acceptAddSlot);
             // 
             // button2
             // 
@@ -172,7 +172,7 @@
             this.Controls.Add(this.dataTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.addButton);
             this.Controls.Add(this.ptrToTypeComboBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ptrToInheritanceComboBox);
@@ -197,7 +197,7 @@
         private System.Windows.Forms.ComboBox ptrToInheritanceComboBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox ptrToTypeComboBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox dataTextBox;

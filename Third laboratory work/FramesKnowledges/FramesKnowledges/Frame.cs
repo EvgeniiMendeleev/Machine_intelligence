@@ -11,6 +11,7 @@ namespace FramesModel
         private string name;
         private string ptrToType;
         private string ptrToInheritance;
+        private string data;
         private Slot(string name, string ptrToType, string ptrToInheritance, string data) 
         {
             this.name = name;
@@ -23,8 +24,6 @@ namespace FramesModel
         {
             return new Slot(name, ptrToType, ptrToInheritance, data);
         }
-
-        private string data;
         public string Data
         {
             set
@@ -76,7 +75,7 @@ namespace FramesModel
             return this.ptrToInheritance;
         }
 
-        public object getData()
+        public string getData()
         {
             return this.data;
         }
@@ -87,7 +86,7 @@ namespace FramesModel
         private string nameOfParent = null;
         private List<Slot> slots = new List<Slot>();
 
-        private Frame() {}
+        private Frame() { }
 
         public static Frame createFrame()
         {
