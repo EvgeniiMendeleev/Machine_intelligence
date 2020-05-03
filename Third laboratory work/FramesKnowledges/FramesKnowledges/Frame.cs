@@ -28,17 +28,13 @@ namespace FramesModel
         {
             set
             {
-                if (value == "null")
+                if (value == null)
                 {
                     ifRemoved();
                     return;
                 }
-                if (value == "") return;
-
-                ifAdded();
-                data = value;
+                ifAdded(value);
             }
-
             get
             {
                 if (data == null) ifNeeded(); 
@@ -46,16 +42,19 @@ namespace FramesModel
             }
         }
 
-        private void ifAdded()
+        private void ifAdded(string value)
         {
+            data = value;
         }
 
         private void ifNeeded()
         {
+            data = "NOT_VALUE_EXCEPTION";
         }
 
         private void ifRemoved()
         {
+            data = "EMPTY";
         }
 
         delegate void connectedProcedure();
@@ -73,11 +72,6 @@ namespace FramesModel
         public string getPtrToInheritance()
         {
             return this.ptrToInheritance;
-        }
-
-        public string getData()
-        {
-            return this.data;
         }
     }
 

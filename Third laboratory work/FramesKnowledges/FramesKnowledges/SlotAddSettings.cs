@@ -19,12 +19,10 @@ namespace FramesKnowledges
             ptrToInheritanceComboBox.SelectedIndex = 0;
             ptrToTypeComboBox.SelectedIndex = 0;
         }
-
         private void showError(string nameOfError, string textOfError)
         {
             MessageBox.Show(textOfError, nameOfError, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
         private string getConnectedString(ref List<string> substrings)
         {
             string result = substrings.First<string>();
@@ -35,12 +33,17 @@ namespace FramesKnowledges
 
             return result;
         }
+        private string getProcessedInputString(string inputStr)
+        {
+            List<string> splitedInputStr = new List<string>(inputStr.Split(' '));
+            while (splitedInputStr.IndexOf("") != -1) splitedInputStr.Remove("");
 
+            return getConnectedString(ref splitedInputStr);
+        }
         public List<string> getDatasFromForm()
         {
             return valuesFromSettings;
         }
-
         private void acceptAddSlot(object sender, EventArgs e)
         {
             if (slotNameText.Text.Length == 0)
@@ -54,13 +57,7 @@ namespace FramesKnowledges
                 return;
             }
 
-            List<string> splitData = new List<string>(dataTextBox.Text.Split(' '));
-            while (splitData.IndexOf("") != -1) splitData.Remove("");
-
-            List<string> splitName = new List<string>(slotNameText.Text.Split(' '));
-            while (splitName.IndexOf("") != -1) splitName.Remove("");
-
-            string nameOfSlot = getConnectedString(ref splitName);
+            string nameOfSlot = getProcessedInputString(slotNameText.Text);
 
             foreach (char ch in nameOfSlot)
             {
@@ -75,7 +72,7 @@ namespace FramesKnowledges
             valuesFromSettings.Add(ptrToInheritanceComboBox.SelectedItem.ToString());
             valuesFromSettings.Add(ptrToTypeComboBox.SelectedItem.ToString());
 
-            string data = getConnectedString(ref splitData);
+            string data = getProcessedInputString(dataTextBox.Text);
 
             switch(ptrToTypeComboBox.Text)
             {
@@ -107,7 +104,6 @@ namespace FramesKnowledges
 
             this.DialogResult = DialogResult.Yes;
         }
-
         private void exitFromSettings(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;

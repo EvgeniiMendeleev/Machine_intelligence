@@ -39,6 +39,13 @@ namespace FramesKnowledges
             }
         }
 
+        private string getProcessedInputString(string inputStr)
+        {
+            List<string> splitedInputStr = new List<string>(inputStr.Split(' '));
+            while (splitedInputStr.IndexOf("") != -1) splitedInputStr.Remove("");
+
+            return getConnectedString(ref splitedInputStr);
+        }
         private string getConnectedString(ref List<string> substrings)
         {
             string result = substrings.First<string>();
@@ -58,11 +65,14 @@ namespace FramesKnowledges
                 return;
             }
 
-            SlotAddSettings window = new SlotAddSettings();
-            DialogResult result = window.ShowDialog();
-            if (result == DialogResult.No || result == DialogResult.Cancel) return;
+            List<string> slotSettings;
+            using (SlotAddSettings window = new SlotAddSettings())
+            {
+                DialogResult result = window.ShowDialog();
+                if (result == DialogResult.No || result == DialogResult.Cancel) return;
 
-            List<string> slotSettings = window.getDatasFromForm();
+                slotSettings = window.getDatasFromForm();
+            }
 
             string nameOfFrame = framesListBox.SelectedItem.ToString();
             for (int j = 0; j < frames[nameOfFrame].getCountSlots(); j++)
@@ -81,16 +91,73 @@ namespace FramesKnowledges
                 return;
             }
 
+            if (nameOfFrame == slotSettings[3])
+            {
+                showError("Ошибка добавления слота!", "Нельзя хранить в кадре указатель на себя самого!");
+                return;
+            }
+
             for (int i = 0; i < framesListBox.Items.Count; i++)
             {
                 if (framesListBox.Items[i].ToString() != slotSettings.Last<string>()) continue;
 
                 Slot slotForFrame = Slot.createSlot(slotSettings[0], slotSettings[2], slotSettings[1], slotSettings[3]);
+                string dautherFrameName = slotSettings[3];
+
+                for (int j = 0; j < frames[nameOfFrame].getCountSlots(); j++)
+                {
+                    Slot slot = frames[nameOfFrame].getSlot(j);
+                    if (slot.getPtrToType() == "FRAME") continue;
+
+                    string dataFromSlot = slot.getPtrToInheritance() == "Unique"? null : slot.Data;
+                    frames[dautherFrameName].setSlot(Slot.createSlot(slot.getName(), slot.getPtrToType(), slot.getPtrToInheritance(), dataFromSlot));
+                }
+
                 frames[nameOfFrame].setSlot(slotForFrame);
                 return;
             }
 
             showError("Ошибка добавления слота!", "Такого кадра нету в списке!");
+        }
+        private void showChangeDataSlotWindow(object sender, EventArgs e)
+        {
+            if (framesListBox.SelectedItem == null)
+            {
+                showError("Ошибка изменения значения!", "Не был выбран кадр!");
+                return;
+            }
+            if (frameInfoView.SelectedItems.Count == 0)
+            {
+                showError("Ошибка изменения значения!", "Не выбран слот, в котором будет меняться значение!");
+                return;
+            }
+
+            Slot slot = frames[framesListBox.SelectedItem.ToString()].getSlot(frameInfoView.SelectedItems[0].Text);
+            if (slot.getPtrToInheritance() == "Same")
+            {
+                showError("Ошибка изменения значения!", "Слот с типом наследования \"Same\" изменить нельзя!");
+                return;
+            }
+
+            string newData = null;
+            using (ChangeDataSlotWindow window = new ChangeDataSlotWindow())
+            {
+                DialogResult result = window.ShowDialog();
+                if (result == DialogResult.Cancel) return;
+
+                newData = window.getDataFromForm();
+            }
+
+            if (slot.getPtrToType() == "FRAME")
+            {
+                if (!framesListBox.Items.Contains(newData))
+                {
+                    showError("Ошибка изменения значения!", "Такого кадра нету в списке!");
+                    return;
+                }
+            }
+
+            slot.Data = newData;
         }
 
         private void deleteSlotFromFrame(object sender, EventArgs e)
@@ -125,11 +192,7 @@ namespace FramesKnowledges
                 }
             }
 
-            List<string> splitNameOfFrame = new List<string>(nameOfFrameTextBox.Text.Split(' '));
-            while (splitNameOfFrame.IndexOf("") != -1) splitNameOfFrame.Remove("");
-
-            string nameOfFrame = getConnectedString(ref splitNameOfFrame);
-
+            string nameOfFrame = getProcessedInputString(nameOfFrameTextBox.Text);
             if (framesListBox.Items.Contains(nameOfFrame))
             {
                 showError("Ошибка добавления кадра!", "Такой кадр уже определён в списке кадров!");
@@ -141,7 +204,6 @@ namespace FramesKnowledges
 
             nameOfFrameTextBox.Clear();
         }
-        //TODO: Не написнаа функция удаления кадра!
         private void deleteFrame(object sender, EventArgs e)
         {
             if (framesListBox.SelectedItems.Count == 0)
@@ -160,7 +222,7 @@ namespace FramesKnowledges
                 {
                     Slot slot = frames[keyName].getSlot(j);
 
-                    if (slot.getData() == nameOfFrame)
+                    if (slot.Data == nameOfFrame)
                     {
                         frames[keyName].deleteSlot(slot.getName());
                     }
@@ -184,7 +246,7 @@ namespace FramesKnowledges
                 item.Text = slot.getName();
                 item.SubItems.Add(slot.getPtrToInheritance());
                 item.SubItems.Add(slot.getPtrToType());
-                item.SubItems.Add(slot.getData().ToString());
+                item.SubItems.Add(slot.Data);
 
                 frameInfoView.Items.Add(item);
             }

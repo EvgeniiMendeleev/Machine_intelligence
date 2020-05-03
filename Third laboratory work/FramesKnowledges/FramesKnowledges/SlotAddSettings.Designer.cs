@@ -86,7 +86,6 @@
             this.ptrToInheritanceComboBox.Items.AddRange(new object[] {
             "Unique",
             "Same",
-            "Range",
             "Override"});
             this.ptrToInheritanceComboBox.Location = new System.Drawing.Point(171, 59);
             this.ptrToInheritanceComboBox.Name = "ptrToInheritanceComboBox";
