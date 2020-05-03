@@ -33,6 +33,7 @@
             this.newDataTextBox = new System.Windows.Forms.TextBox();
             this.acceptButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -48,7 +49,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 37);
+            this.label2.Location = new System.Drawing.Point(3, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(166, 13);
             this.label2.TabIndex = 1;
@@ -63,7 +64,7 @@
             // 
             // acceptButton
             // 
-            this.acceptButton.Location = new System.Drawing.Point(249, 63);
+            this.acceptButton.Location = new System.Drawing.Point(123, 94);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(75, 23);
             this.acceptButton.TabIndex = 3;
@@ -73,7 +74,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(330, 63);
+            this.cancelButton.Location = new System.Drawing.Point(204, 94);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 4;
@@ -81,11 +82,20 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.closeWindow);
             // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(172, 60);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(233, 33);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "(ПРИМЕЧАНИЕ: Если хотите стереть значение, то оставьте поле пустым)";
+            // 
             // ChangeDataSlotWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(417, 93);
+            this.ClientSize = new System.Drawing.Size(417, 129);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.acceptButton);
             this.Controls.Add(this.newDataTextBox);
@@ -106,5 +116,6 @@
         private System.Windows.Forms.TextBox newDataTextBox;
         private System.Windows.Forms.Button acceptButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -108,6 +108,7 @@ namespace FramesKnowledges
                 {
                     Slot slot = frames[nameOfFrame].getSlot(j);
                     if (slot.getPtrToType() == "FRAME") continue;
+                    if (frames[dautherFrameName].isContaine(slot.getName())) continue;
 
                     string dataFromSlot = slot.getPtrToInheritance() == "Unique"? null : slot.Data;
                     frames[dautherFrameName].setSlot(Slot.createSlot(slot.getName(), slot.getPtrToType(), slot.getPtrToInheritance(), dataFromSlot));
@@ -148,13 +149,37 @@ namespace FramesKnowledges
                 newData = window.getDataFromForm();
             }
 
-            if (slot.getPtrToType() == "FRAME")
+            switch (slot.getPtrToType())
             {
-                if (!framesListBox.Items.Contains(newData))
-                {
-                    showError("Ошибка изменения значения!", "Такого кадра нету в списке!");
-                    return;
-                }
+                case "FRAME":
+                    if (!framesListBox.Items.Contains(newData) && newData != "")
+                    {
+                        showError("Ошибка изменения значения!", "Такого кадра нету в списке!");
+                        return;
+                    }
+
+                    if (newData == "") break;
+
+                    string dautherFrameName = newData;
+                    string nameOfFrame = frameNameText.Text;
+                    for (int j = 0; j < frames[nameOfFrame].getCountSlots(); j++)
+                    {
+                        Slot mySlot = frames[nameOfFrame].getSlot(j);
+                        if (mySlot.getPtrToType() == "FRAME") continue;
+                        if (frames[dautherFrameName].isContaine(mySlot.getName())) continue;
+
+                        string dataFromSlot = mySlot.getPtrToInheritance() == "Unique" ? null : mySlot.Data;
+                        frames[dautherFrameName].setSlot(Slot.createSlot(mySlot.getName(), mySlot.getPtrToType(), mySlot.getPtrToInheritance(), dataFromSlot));
+                    }
+
+                    break;
+                case "BOOL":
+                    if(newData != "true" && newData != "false" && newData != "")
+                    {
+                        showError("Ошибка изменения значения!", "В случае BOOL значение может быть или true, или false");
+                        return;
+                    }
+                    break;
             }
 
             slot.Data = newData;
@@ -171,7 +196,7 @@ namespace FramesKnowledges
             string nameOfFrame = frameNameText.Text;
             frames[nameOfFrame].deleteSlot(frameInfoView.SelectedItems[0].Text);
 
-            showInfoAboutFrameOnName(nameOfFrame);
+            frameInfoView.Items.Clear();
         }
 
         #region The actions to frame
@@ -231,6 +256,12 @@ namespace FramesKnowledges
 
             frames.Remove(nameOfFrame);
             framesListBox.Items.Remove(nameOfFrame);
+
+            if (frameNameText.Text == nameOfFrame)
+            { 
+                frameInfoView.Items.Clear();
+                frameNameText.Text = "";
+            }
         }
         private void showInfoAboutFrameOnName(string name)
         {

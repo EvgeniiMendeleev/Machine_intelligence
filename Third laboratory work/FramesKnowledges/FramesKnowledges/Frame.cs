@@ -19,7 +19,6 @@ namespace FramesModel
             this.ptrToInheritance = ptrToInheritance;
             this.Data = data;
         }
-
         public static Slot createSlot(string name, string ptrToType, string ptrToInheritance, string data)
         {
             return new Slot(name, ptrToType, ptrToInheritance, data);
@@ -63,12 +62,10 @@ namespace FramesModel
         {
             return this.name;
         }
-
         public string getPtrToType()
         {
             return this.ptrToType;
         }
-
         public string getPtrToInheritance()
         {
             return this.ptrToInheritance;
@@ -116,6 +113,14 @@ namespace FramesModel
                     slots.RemoveAt(i);
                 }
             }
+        }
+        public bool isContaine(string nameOfSlot)
+        {
+            for (int i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].getName() == nameOfSlot) return true;
+            }
+            return false;
         }
     }
 }

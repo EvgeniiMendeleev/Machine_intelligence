@@ -51,11 +51,6 @@ namespace FramesKnowledges
                 showError("Ошибка создания слота!", "Не указано имя слота!");
                 return;
             }
-            else if (dataTextBox.Text.Length == 0)
-            {
-                showError("Ошибка создания слота!", "Вы не задали значение слота!");
-                return;
-            }
 
             string nameOfSlot = getProcessedInputString(slotNameText.Text);
 
@@ -72,11 +67,17 @@ namespace FramesKnowledges
             valuesFromSettings.Add(ptrToInheritanceComboBox.SelectedItem.ToString());
             valuesFromSettings.Add(ptrToTypeComboBox.SelectedItem.ToString());
 
-            string data = getProcessedInputString(dataTextBox.Text);
+            string data = dataTextBox.Text.Length == 0 ? null : getProcessedInputString(dataTextBox.Text);
 
             switch(ptrToTypeComboBox.Text)
             {
                 case "FRAME":
+                    if (data == null)
+                    {
+                        valuesFromSettings.Add(data);
+                        break;
+                    }
+
                     foreach (char ch in data)
                     {
                         if (ch != ' ' && !Char.IsLetter(ch))
@@ -88,7 +89,7 @@ namespace FramesKnowledges
                     valuesFromSettings.Add(data);
                     break;
                 case "BOOL":
-                    if (data != "true" && data != "false")
+                    if (data != "true" && data != "false" && data != null)
                     {
                         showError("Ошибка добавления слота!", "В случае BOOL значение должно быть true или false!");
                         return;
