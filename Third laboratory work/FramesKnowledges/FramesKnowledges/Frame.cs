@@ -74,7 +74,6 @@ namespace FramesModel
 
     class Frame
     {
-        private string nameOfParent = null;
         private List<Slot> slots = new List<Slot>();
 
         private Frame() { }
