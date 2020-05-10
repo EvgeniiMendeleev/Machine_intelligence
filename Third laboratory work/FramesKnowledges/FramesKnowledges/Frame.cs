@@ -18,6 +18,8 @@ namespace FramesModel
         private Dictionary<string, Frame> framesFromDB;
         private Dictionary<string, ILisp> lispsFromDB;
         private string nameOfRoot;
+        private string resultFrame;
+
         public FindLisp(List<string> characteristics)
         {
             this.characteristics = characteristics;
@@ -31,18 +33,45 @@ namespace FramesModel
             this.framesFromDB = framesFromDB;
             this.lispsFromDB = lispsFromDB;
         }
-
+        public string getResultFrame()
+        {
+            return this.resultFrame;
+        }
         public void execute()
         {
-            int coincidencedAttr = 0;
             Stack<string> vertexs = new Stack<string>();
 
             vertexs.Push(nameOfRoot);
-
             while (vertexs.Count > 0)
             {
- 
+                int coincidencedAttr = 0;
+                string vertex = vertexs.Pop();
+
+                for (int i = 0; i < framesFromDB[vertex].getCountSlots(); i++)
+                {
+                    Slot slot = framesFromDB[vertex].getSlot(i);
+                    if (slot.getPtrToType() == "LISP") continue;
+
+                    if (slot.getPtrToType() == "FRAME")
+                    {
+                        vertexs.Push(slot.Data);
+                        continue;
+                    }
+
+                    if (characteristics.Contains(slot.Data))
+                    {
+                        ++coincidencedAttr;
+                    }
+                }
+
+                if (coincidencedAttr >= characteristics.Count())
+                {
+                    resultFrame = vertex;
+                    return;
+                }
             }
+
+            resultFrame = "NOT_FOUND_FRAME";
         }
     }
 

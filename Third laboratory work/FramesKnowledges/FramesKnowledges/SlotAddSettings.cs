@@ -83,6 +83,7 @@ namespace FramesKnowledges
                         if (ch != ' ' && !Char.IsLetter(ch))
                         {
                             showError("Ошибка добавления слота!", "В значении присутствуют сторонние символы!");
+                            valuesFromSettings.Clear();
                             return;
                         }
                     }
@@ -92,6 +93,7 @@ namespace FramesKnowledges
                     if (data != "true" && data != "false" && data != null)
                     {
                         showError("Ошибка добавления слота!", "В случае BOOL значение должно быть true или false!");
+                        valuesFromSettings.Clear();
                         return;
                     }
                     valuesFromSettings.Add(data);

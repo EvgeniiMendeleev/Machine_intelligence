@@ -46,6 +46,8 @@ namespace FramesKnowledges
             lisp.setDatabase(ref frames, ref lisps);
             lisp.setRootFrame(framesListBox.SelectedItem.ToString());
             lisp.execute();
+
+            Console.WriteLine("Итоговый кадр: " + lisp.getResultFrame());
         }
         #endregion
         #region The info windows
