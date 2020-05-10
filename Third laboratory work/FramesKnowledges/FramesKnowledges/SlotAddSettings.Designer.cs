@@ -108,7 +108,6 @@
             this.ptrToTypeComboBox.Items.AddRange(new object[] {
             "BOOL",
             "FRAME",
-            "LISP",
             "TEXT"});
             this.ptrToTypeComboBox.Location = new System.Drawing.Point(171, 86);
             this.ptrToTypeComboBox.Name = "ptrToTypeComboBox";

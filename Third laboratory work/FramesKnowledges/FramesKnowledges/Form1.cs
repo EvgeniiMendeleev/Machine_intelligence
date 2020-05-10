@@ -14,12 +14,34 @@ namespace FramesKnowledges
     public partial class Form1 : Form
     {
         private Dictionary<string, Frame> frames = new Dictionary<string, Frame>();
-
+        private Dictionary<string, ILisp> lisps = new Dictionary<string, ILisp>();
         public Form1()
         {
             InitializeComponent();
         }
+        #region The MAIN fuctions
+        private void runProcedure(object sender, EventArgs e)
+        {
+            if (framesListBox.SelectedItem == null)
+            {
+                showError("Ошибка запуска процедуры!", "Чтобы запустить процедуру, выберите кадр, где находится процедура!");
+                return;
+            }
+            else if (frameInfoView.SelectedItems.Count == 0)
+            {
+                showError("Ошибка запуска процедуры!", "Чтобы запустить процедуру, выберите её в окне об информации кадра!");
+                return;
+            }
 
+            string nameOfSlot = frames[framesListBox.SelectedItem.ToString()].getSlot(frameInfoView.SelectedItems[0].ToString()).getName();
+
+            if (lisps[nameOfSlot] is PrintLisp)
+            {
+                showError("Ошибка запуска процедуры!", "Данная процедура запускается самой системой");
+                return;
+            }
+        }
+        #endregion
         #region The info windows
         private void showError(string nameOfError, string textOfError)
         {
@@ -31,6 +53,7 @@ namespace FramesKnowledges
             new AboutBox().ShowDialog();
         }
         #endregion
+        #region The functions are for work with strings
         private void enterANameFrame(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -38,7 +61,6 @@ namespace FramesKnowledges
                 addFrame(sender, e);
             }
         }
-
         private string getProcessedInputString(string inputStr)
         {
             List<string> splitedInputStr = new List<string>(inputStr.Split(' '));
@@ -56,7 +78,51 @@ namespace FramesKnowledges
 
             return result;
         }
+        #endregion
+        #region The windows are for work with knowledge_s database
+        private void showAddLispSettings(object sender, EventArgs e)
+        {
+            if (framesListBox.SelectedItem == null)
+            {
+                showError("Ошибка добавления процедуры!", "Выберите кадр для того, чтобы добавить процедуру!");
+                return;
+            }
 
+            AddLispWindow lispWindow = new AddLispWindow();
+            DialogResult result = lispWindow.ShowDialog();
+
+            if (result == DialogResult.Cancel) return;
+
+            string procedureName = lispWindow.getNameOfProcedure();
+            string typeOfLisp = null;
+
+            switch (lispWindow.getNameOfButton())
+            {
+                case "btnFind":
+                    lisps.Add(procedureName, new FindLisp(lispWindow.getCharactersFromForm()));
+                    typeOfLisp = "FIND";
+                    break;
+                case "btnPrint":
+                    lisps.Add(procedureName, new PrintLisp(lispWindow.getPrintTextFromForm()));
+                    typeOfLisp = "PRINT";
+                    break;
+            }
+
+            Slot slot = Slot.createSlot(procedureName, "LISP", "-", typeOfLisp);
+            frames[framesListBox.SelectedItem.ToString()].setSlot(slot);
+            lispWindow.Dispose();
+        }
+        private void showDatas(object sender, EventArgs e)
+        {
+            Console.WriteLine("********************LISPS********************");
+            foreach (KeyValuePair<string, ILisp> lisp in lisps)
+            {
+                Console.Write(lisp.Key + " ");
+                if (lisp.Value is FindLisp) Console.Write("FindLisp\n");
+                if (lisp.Value is PrintLisp) Console.Write("PrintLisp\n");
+            }
+            Console.WriteLine("*********************************************");
+        }
         private void showSlotAddSettings(object sender, EventArgs e)
         {
             if (framesListBox.SelectedItem == null)
@@ -107,8 +173,8 @@ namespace FramesKnowledges
                 for (int j = 0; j < frames[nameOfFrame].getCountSlots(); j++)
                 {
                     Slot slot = frames[nameOfFrame].getSlot(j);
-                    if (slot.getPtrToType() == "FRAME") continue;
-                    if (frames[dautherFrameName].isContaine(slot.getName())) continue;
+                    if (slot.getPtrToType() == "FRAME" || slot.getPtrToType() == "LISP") continue;
+                    if (frames[dautherFrameName].isContains(slot.getName())) continue;
 
                     string dataFromSlot = slot.getPtrToInheritance() == "Unique"? null : slot.Data;
                     frames[dautherFrameName].setSlot(Slot.createSlot(slot.getName(), slot.getPtrToType(), slot.getPtrToInheritance(), dataFromSlot));
@@ -139,6 +205,11 @@ namespace FramesKnowledges
                 showError("Ошибка изменения значения!", "Слот с типом наследования \"Same\" изменить нельзя!");
                 return;
             }
+            else if (slot.getPtrToType() == "LISP")
+            {
+                showError("Ошибка изменения значения!", "Процедура не имеет значения!");
+                return;
+            }
 
             string newData = null;
             using (ChangeDataSlotWindow window = new ChangeDataSlotWindow())
@@ -166,7 +237,7 @@ namespace FramesKnowledges
                     {
                         Slot mySlot = frames[nameOfFrame].getSlot(j);
                         if (mySlot.getPtrToType() == "FRAME") continue;
-                        if (frames[dautherFrameName].isContaine(mySlot.getName())) continue;
+                        if (frames[dautherFrameName].isContains(mySlot.getName())) continue;
 
                         string dataFromSlot = mySlot.getPtrToInheritance() == "Unique" ? null : mySlot.Data;
                         frames[dautherFrameName].setSlot(Slot.createSlot(mySlot.getName(), mySlot.getPtrToType(), mySlot.getPtrToInheritance(), dataFromSlot));
@@ -180,26 +251,13 @@ namespace FramesKnowledges
                         return;
                     }
                     break;
+
             }
 
             slot.Data = newData;
         }
-
-        private void deleteSlotFromFrame(object sender, EventArgs e)
-        {
-            if(frameInfoView.SelectedItems.Count == 0)
-            {
-                showError("Ошибка удаления слота!", "Выберите слот для удаления из кадра в информации о кадре!");
-                return;
-            }
-
-            string nameOfFrame = frameNameText.Text;
-            frames[nameOfFrame].deleteSlot(frameInfoView.SelectedItems[0].Text);
-
-            frameInfoView.Items.Clear();
-        }
-
-        #region The actions to frame
+        #endregion
+        #region The actions are for frame
         private void addFrame(object sender, EventArgs e)
         {
             if (nameOfFrameTextBox.Text.Length == 0)
@@ -263,12 +321,36 @@ namespace FramesKnowledges
                 frameNameText.Text = "";
             }
         }
-        private void showInfoAboutFrameOnName(string name)
+        private void deleteSlotFromFrame(object sender, EventArgs e)
         {
-            frameInfoView.Items.Clear();
-            Frame selectedFrame = frames[name];
+            if (frameInfoView.SelectedItems.Count == 0)
+            {
+                showError("Ошибка удаления слота!", "Выберите слот для удаления из кадра в информации о кадре!");
+                return;
+            }
 
-            frameNameText.Text = name;
+            string nameOfFrame = frameNameText.Text;
+            string nameOfSlot = frameInfoView.SelectedItems[0].Text;
+
+            frames[nameOfFrame].deleteSlot(nameOfSlot);
+            if (lisps.ContainsKey(nameOfSlot)) lisps.Remove(nameOfSlot);
+
+            frameInfoView.Items.Clear();
+        }
+        private void showInfoAboutFrame(object sender, EventArgs e)
+        {
+            if (framesListBox.SelectedItem == null)
+            {
+                showError("Ошибка отображения!", "Не был выбран кадр!");
+                return;
+            }
+
+            string nameOfFrame = framesListBox.SelectedItem.ToString();
+            frameInfoView.Items.Clear();
+
+            Frame selectedFrame = frames[nameOfFrame];
+            frameNameText.Text = nameOfFrame;
+            
             for (int i = 0; i < selectedFrame.getCountSlots(); i++)
             {
                 Slot slot = selectedFrame.getSlot(i);
@@ -281,17 +363,6 @@ namespace FramesKnowledges
 
                 frameInfoView.Items.Add(item);
             }
-        }
-        private void showInfoAboutFrame(object sender, EventArgs e)
-        {
-            if (framesListBox.SelectedItem == null)
-            {
-                showError("Ошибка отображения!", "Не был выбран кадр!");
-                return;
-            }
-
-            string nameOfFrame = framesListBox.SelectedItem.ToString();
-            showInfoAboutFrameOnName(nameOfFrame);
         }
         #endregion
     }

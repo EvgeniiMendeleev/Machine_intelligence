@@ -3,9 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FramesModel
 {
+    interface ILisp
+    {
+        void execute();
+    }
+
+    class FindLisp : ILisp
+    {
+        private List<string> characteristics = new List<string>();
+        public FindLisp(List<string> characteristics)
+        {
+            this.characteristics = characteristics;
+        }
+
+        public void execute()
+        {
+            Console.WriteLine("Я ищу кадр!");
+        }
+    }
+
+    class PrintLisp : ILisp
+    {
+        private string textInfo;
+        private object textBox;
+
+        public PrintLisp(string text)
+        {
+            this.textInfo = text;
+        }
+
+        public void execute()
+        {
+            (textBox as TextBox).AppendText(textInfo);
+        }
+
+        public void setTextBox(object textBox)
+        {
+            this.textBox = textBox;
+        }
+    }
+
     class Slot
     {
         private string name;
@@ -55,8 +96,6 @@ namespace FramesModel
         {
             data = "EMPTY";
         }
-
-        delegate void connectedProcedure();
 
         public string getName()
         {
@@ -113,7 +152,7 @@ namespace FramesModel
                 }
             }
         }
-        public bool isContaine(string nameOfSlot)
+        public bool isContains(string nameOfSlot)
         {
             for (int i = 0; i < slots.Count; i++)
             {

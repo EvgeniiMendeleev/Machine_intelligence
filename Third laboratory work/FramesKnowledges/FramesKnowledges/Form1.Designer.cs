@@ -42,7 +42,6 @@
             this.frameNameText = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
@@ -50,6 +49,9 @@
             this.framesListBox = new System.Windows.Forms.ListBox();
             this.nameOfFrameTextBox = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button9 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,7 +98,7 @@
             this.frameInfoView.GridLines = true;
             this.frameInfoView.Location = new System.Drawing.Point(202, 110);
             this.frameInfoView.Name = "frameInfoView";
-            this.frameInfoView.Size = new System.Drawing.Size(570, 409);
+            this.frameInfoView.Size = new System.Drawing.Size(570, 431);
             this.frameInfoView.TabIndex = 2;
             this.frameInfoView.UseCompatibleStateImageBehavior = false;
             this.frameInfoView.View = System.Windows.Forms.View.Details;
@@ -137,7 +139,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label3.Location = new System.Drawing.Point(199, 90);
+            this.label3.Location = new System.Drawing.Point(199, 83);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 17);
             this.label3.TabIndex = 4;
@@ -147,23 +149,24 @@
             // 
             this.frameNameText.AutoSize = true;
             this.frameNameText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Italic | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.frameNameText.Location = new System.Drawing.Point(277, 90);
+            this.frameNameText.Location = new System.Drawing.Point(281, 83);
             this.frameNameText.Name = "frameNameText";
             this.frameNameText.Size = new System.Drawing.Size(0, 17);
             this.frameNameText.TabIndex = 5;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 94);
+            this.label2.Font = new System.Drawing.Font("Monotype Corsiva", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(12, 75);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 13);
+            this.label2.Size = new System.Drawing.Size(184, 32);
             this.label2.TabIndex = 6;
             this.label2.Text = "Действия над слотами:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 166);
+            this.button2.Location = new System.Drawing.Point(12, 197);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(184, 23);
             this.button2.TabIndex = 2;
@@ -171,25 +174,9 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.deleteSlotFromFrame);
             // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Monotype Corsiva", 15F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label4.Location = new System.Drawing.Point(61, 63);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 24);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Операции";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(12, 137);
+            this.button3.Location = new System.Drawing.Point(12, 168);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(184, 23);
             this.button3.TabIndex = 1;
@@ -206,7 +193,7 @@
             this.label5.Font = new System.Drawing.Font("Monotype Corsiva", 15F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label5.Location = new System.Drawing.Point(40, 192);
+            this.label5.Location = new System.Drawing.Point(37, 222);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(128, 24);
             this.label5.TabIndex = 10;
@@ -240,9 +227,10 @@
             this.framesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.framesListBox.FormattingEnabled = true;
-            this.framesListBox.Location = new System.Drawing.Point(12, 219);
+            this.framesListBox.HorizontalScrollbar = true;
+            this.framesListBox.Location = new System.Drawing.Point(12, 258);
             this.framesListBox.Name = "framesListBox";
-            this.framesListBox.Size = new System.Drawing.Size(184, 251);
+            this.framesListBox.Size = new System.Drawing.Size(184, 212);
             this.framesListBox.TabIndex = 14;
             // 
             // nameOfFrameTextBox
@@ -265,11 +253,45 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.showInfoAboutFrame);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(12, 139);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(184, 23);
+            this.button7.TabIndex = 15;
+            this.button7.Text = "Добавить процедуру";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.showAddLispSettings);
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(336, 544);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(436, 13);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "(ПРИМЕЧАНИЕ: Для того, чтобы запустить процедуру, выберите её в слотах кадра)";
+            // 
+            // button9
+            // 
+            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button9.Location = new System.Drawing.Point(588, 563);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(184, 23);
+            this.button9.TabIndex = 18;
+            this.button9.Text = "Запустить процедуру";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.runProcedure);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 598);
+            this.Controls.Add(this.button9);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.nameOfFrameTextBox);
             this.Controls.Add(this.framesListBox);
@@ -277,7 +299,6 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.frameNameText);
@@ -289,7 +310,7 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(800, 636);
             this.Name = "Form1";
             this.Text = "Laba3 by Mendeleev Evgeny";
             this.menuStrip1.ResumeLayout(false);
@@ -314,7 +335,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ColumnHeader dataColumn;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button4;
@@ -322,6 +342,9 @@
         private System.Windows.Forms.ListBox framesListBox;
         private System.Windows.Forms.TextBox nameOfFrameTextBox;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button9;
     }
 }
 

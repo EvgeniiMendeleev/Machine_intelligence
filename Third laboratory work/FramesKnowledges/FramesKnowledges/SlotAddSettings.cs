@@ -96,8 +96,6 @@ namespace FramesKnowledges
                     }
                     valuesFromSettings.Add(data);
                     break;
-                case "LISP":
-                    break;
                 case "TEXT":
                     valuesFromSettings.Add(data);
                     break;

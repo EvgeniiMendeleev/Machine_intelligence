@@ -25,7 +25,6 @@ namespace FramesKnowledges
             string result = splitedInputStr.First<string>();
             for (int i = 1; i < splitedInputStr.Count; i++)
             {
-
                 result += ' ' + splitedInputStr[i];
             }
 
