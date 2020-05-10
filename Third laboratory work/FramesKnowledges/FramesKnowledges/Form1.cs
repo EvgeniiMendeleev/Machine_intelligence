@@ -19,7 +19,7 @@ namespace FramesKnowledges
         {
             InitializeComponent();
         }
-        #region The MAIN fuctions
+        #region The MAIN function
         private void runProcedure(object sender, EventArgs e)
         {
             if (framesListBox.SelectedItem == null)
@@ -33,13 +33,19 @@ namespace FramesKnowledges
                 return;
             }
 
-            string nameOfSlot = frames[framesListBox.SelectedItem.ToString()].getSlot(frameInfoView.SelectedItems[0].ToString()).getName();
+            string nameOfSlot = frames[framesListBox.SelectedItem.ToString()].getSlot(frameInfoView.SelectedItems[0].Text).getName();
 
             if (lisps[nameOfSlot] is PrintLisp)
             {
                 showError("Ошибка запуска процедуры!", "Данная процедура запускается самой системой");
                 return;
             }
+
+            FindLisp lisp = lisps[nameOfSlot] as FindLisp;
+
+            lisp.setDatabase(ref frames, ref lisps);
+            lisp.setRootFrame(framesListBox.SelectedItem.ToString());
+            lisp.execute();
         }
         #endregion
         #region The info windows

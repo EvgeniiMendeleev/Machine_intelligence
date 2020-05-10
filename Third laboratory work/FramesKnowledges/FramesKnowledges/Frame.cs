@@ -15,14 +15,34 @@ namespace FramesModel
     class FindLisp : ILisp
     {
         private List<string> characteristics = new List<string>();
+        private Dictionary<string, Frame> framesFromDB;
+        private Dictionary<string, ILisp> lispsFromDB;
+        private string nameOfRoot;
         public FindLisp(List<string> characteristics)
         {
             this.characteristics = characteristics;
         }
+        public void setRootFrame(string nameOfFrame)
+        {
+            this.nameOfRoot = nameOfFrame;
+        }
+        public void setDatabase(ref Dictionary<string, Frame> framesFromDB, ref Dictionary<string, ILisp> lispsFromDB)
+        {
+            this.framesFromDB = framesFromDB;
+            this.lispsFromDB = lispsFromDB;
+        }
 
         public void execute()
         {
-            Console.WriteLine("Я ищу кадр!");
+            int coincidencedAttr = 0;
+            Stack<string> vertexs = new Stack<string>();
+
+            vertexs.Push(nameOfRoot);
+
+            while (vertexs.Count > 0)
+            {
+ 
+            }
         }
     }
 

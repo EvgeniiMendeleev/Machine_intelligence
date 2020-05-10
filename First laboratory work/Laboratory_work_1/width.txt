@@ -1,0 +1,7 @@
+Search in width's sequences:
+ * 1 2 7 9 
+ * 2 7 10 
+ * 9 10 
+The bad P: 0.111111
+The best P: 0.222222
+Average P: 0.166667
