@@ -19,7 +19,10 @@ namespace FramesModel
         private Dictionary<string, ILisp> lispsFromDB;
         private string nameOfRoot;
         private string resultFrame;
-
+        public List<string> getCharacters()
+        {
+            return characteristics;
+        }
         public FindLisp(List<string> characteristics)
         {
             this.characteristics = characteristics;
@@ -37,37 +40,56 @@ namespace FramesModel
         {
             return this.resultFrame;
         }
+
+        private struct State
+        {
+            public string nameOfFrame;
+            public int countOfCharacters;
+
+            public State(string nameOfFrame, int countOfChars)
+            {
+                this.nameOfFrame = nameOfFrame;
+                this.countOfCharacters = countOfChars;
+            }
+        };
+
         public void execute()
         {
-            Stack<string> vertexs = new Stack<string>();
+            Stack<State> vertexs = new Stack<State>();
 
-            vertexs.Push(nameOfRoot);
+            vertexs.Push(new State(nameOfRoot, 0));
             while (vertexs.Count > 0)
             {
-                int coincidencedAttr = 0;
-                string vertex = vertexs.Pop();
+                State vertex = vertexs.Pop();
+                int coincidencedAttr = vertex.countOfCharacters;
 
-                for (int i = 0; i < framesFromDB[vertex].getCountSlots(); i++)
+                foreach (Slot slot in framesFromDB[vertex.nameOfFrame].getSlots())
                 {
-                    Slot slot = framesFromDB[vertex].getSlot(i);
-                    if (slot.getPtrToType() == "LISP") continue;
+                    if (slot.getPtrToType() == "LISP" || slot.getPtrToType() == "FRAME") continue;
 
-                    if (slot.getPtrToType() == "FRAME")
+                    switch (slot.getPtrToType())
                     {
-                        vertexs.Push(slot.Data);
-                        continue;
-                    }
-
-                    if (characteristics.Contains(slot.Data))
-                    {
-                        ++coincidencedAttr;
+                        case "TEXT":
+                            if (characteristics.Contains(slot.Data)) ++coincidencedAttr;
+                            break;
+                        case "BOOL":
+                            if (characteristics.Contains(slot.getName()) && slot.Data == "true") ++coincidencedAttr;
+                            break;
                     }
                 }
 
                 if (coincidencedAttr >= characteristics.Count())
                 {
-                    resultFrame = vertex;
+                    resultFrame = vertex.nameOfFrame;
                     return;
+                }
+
+                foreach (Slot slot in framesFromDB[vertex.nameOfFrame].getSlots())
+                {
+                    if (slot.getPtrToType() == "FRAME")
+                    {
+                        vertexs.Push(new State(slot.Data, coincidencedAttr));
+                    }
                 }
             }
 
@@ -75,7 +97,7 @@ namespace FramesModel
         }
     }
 
-    class PrintLisp : ILisp
+    public class PrintLisp : ILisp
     {
         private string textInfo;
         private object textBox;
@@ -85,9 +107,14 @@ namespace FramesModel
             this.textInfo = text;
         }
 
+        public string getText()
+        {
+            return textInfo;
+        }
+
         public void execute()
         {
-            (textBox as TextBox).AppendText(textInfo);
+            (textBox as TextBox).Text = textInfo;
         }
 
         public void setTextBox(object textBox)
@@ -179,6 +206,11 @@ namespace FramesModel
         public void setSlot(Slot slot)
         {
             slots.Add(slot);
+        }
+
+        public List<Slot> getSlots()
+        {
+            return slots;
         }
 
         public Slot getSlot(int i)

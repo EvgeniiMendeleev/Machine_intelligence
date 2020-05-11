@@ -52,6 +52,7 @@
             this.button7 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.button9 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -284,11 +285,23 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.runProcedure);
             // 
+            // button8
+            // 
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button8.Location = new System.Drawing.Point(369, 563);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(213, 23);
+            this.button8.TabIndex = 19;
+            this.button8.Text = "Отобразить инфрмацию о процедуре";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.showProdInfo);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 598);
+            this.Controls.Add(this.button8);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button7);
@@ -345,6 +358,7 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button8;
     }
 }
 

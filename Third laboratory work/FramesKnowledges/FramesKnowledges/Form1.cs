@@ -33,7 +33,7 @@ namespace FramesKnowledges
                 return;
             }
 
-            string nameOfSlot = frames[framesListBox.SelectedItem.ToString()].getSlot(frameInfoView.SelectedItems[0].Text).getName();
+            string nameOfSlot = frames[frameNameText.Text].getSlot(frameInfoView.SelectedItems[0].Text).getName();
 
             if (lisps[nameOfSlot] is PrintLisp)
             {
@@ -47,7 +47,26 @@ namespace FramesKnowledges
             lisp.setRootFrame(framesListBox.SelectedItem.ToString());
             lisp.execute();
 
-            Console.WriteLine("Итоговый кадр: " + lisp.getResultFrame());
+            string resultFrame = lisp.getResultFrame();
+
+            if (resultFrame == "NOT_FOUND_FRAME")
+            {
+                new NotResultWindow().ShowDialog();
+                return;
+            }
+
+            foreach (Slot slot in frames[resultFrame].getSlots())
+            {
+                if (slot.getPtrToType() == "LISP" && slot.Data == "PRINT")
+                {
+                    ResultWindow window = new ResultWindow(resultFrame, lisps[slot.getName()] as PrintLisp);
+                    window.ShowDialog();
+                    return;
+                }
+            }
+
+            ResultWindow windowAfter = new ResultWindow(resultFrame, null);
+            windowAfter.ShowDialog();
         }
         #endregion
         #region The info windows
@@ -263,6 +282,38 @@ namespace FramesKnowledges
             }
 
             slot.Data = newData;
+        }
+        private void showProdInfo(object sender, EventArgs e)
+        {
+            if (frameInfoView.SelectedItems.Count == 0)
+            {
+                showError("Ошибка просмотра процедуры!", "Выберите слот с процедурой, чтобы посмотреть информацию о ней!");
+                return;
+            }
+
+            if (!lisps.ContainsKey(frameInfoView.SelectedItems[0].Text))
+            {
+                showError("Ошибка просмотра процедуры!", "Данный слот не является процедурой!");
+                return;
+            }
+
+            ProcedureInfoWindow window = null;
+            if (lisps[frameInfoView.SelectedItems[0].Text] is PrintLisp)
+            {
+                List<string> list = new List<string>();
+                list.Add((lisps[frameInfoView.SelectedItems[0].Text] as PrintLisp).getText());
+                window = new ProcedureInfoWindow(frameInfoView.SelectedItems[0].Text, list);
+            }
+            else if (lisps[frameInfoView.SelectedItems[0].Text] is FindLisp)
+            {
+                window = new ProcedureInfoWindow(frameInfoView.SelectedItems[0].Text, (lisps[frameInfoView.SelectedItems[0].Text] as FindLisp).getCharacters());
+            }
+
+            if (window != null)
+            {
+                window.ShowDialog();
+                window.Dispose();
+            }
         }
         #endregion
         #region The actions are for frame
