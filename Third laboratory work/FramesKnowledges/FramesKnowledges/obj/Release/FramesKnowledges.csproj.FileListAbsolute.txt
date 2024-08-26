@@ -13,20 +13,3 @@ C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laborator
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.csproj.GenerateResource.Cache
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.exe
 C:\Users\Иришка\Documents\VS Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.pdb
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\bin\Release\FramesKnowledges.exe.config
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\bin\Release\FramesKnowledges.exe
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\bin\Release\FramesKnowledges.pdb
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.csproj.AssemblyReference.cache
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.AboutBox.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.AddLispWindow.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.ChangeDataSlotWindow.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.Form1.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.NotResultWindow.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.ProcedureInfoWindow.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.ResultWindow.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.SlotAddSettings.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.Properties.Resources.resources
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.csproj.GenerateResource.cache
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.csproj.CoreCompileInputs.cache
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.exe
-E:\Projects\Machine_intelligence\Third laboratory work\FramesKnowledges\FramesKnowledges\obj\Release\FramesKnowledges.pdb
